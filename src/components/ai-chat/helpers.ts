@@ -275,7 +275,7 @@ export function formatTimestamp(date: Date): string {
     return 'Yesterday';
   }
 
-  return date.toLocaleDateString('en-AU', { month: 'short', day: 'numeric' });
+  return date.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' });
 }
 
 // ─── Get Current Page Context ─────────────────────────────────────

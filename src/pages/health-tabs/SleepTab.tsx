@@ -145,7 +145,7 @@ export function SleepTab({ metrics, allMetrics, onUpdateMetrics }: SleepTabProps
 
   const last7Sleep = sleepHistory.slice(-7);
   const barLabels = last7Sleep.map((m: HealthMetrics) =>
-    new Date(m.date + 'T12:00:00').toLocaleDateString('en-AU', { weekday: 'short' })
+    new Date(m.date + 'T12:00:00').toLocaleDateString('id-ID', { weekday: 'short' })
   );
 
   const last14 = Array.from({ length: 14 }, (_, i: number) => {
@@ -154,7 +154,7 @@ export function SleepTab({ metrics, allMetrics, onUpdateMetrics }: SleepTabProps
   });
   const qualityData = last14.map((date: string) => allMetrics.find((m: HealthMetrics) => m.date === date)?.sleep_quality || 0);
   const sleepHoursData = last14.map((date: string) => allMetrics.find((m: HealthMetrics) => m.date === date)?.sleep_hours || 0);
-  const chart14Labels = last14.map((d: string, i: number) => i % 3 === 0 ? new Date(d + 'T12:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }) : '');
+  const chart14Labels = last14.map((d: string, i: number) => i % 3 === 0 ? new Date(d + 'T12:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) : '');
 
   // ── Sleep Score ──
   const sleepScore = useMemo(() => computeSleepScore(
@@ -206,7 +206,7 @@ export function SleepTab({ metrics, allMetrics, onUpdateMetrics }: SleepTabProps
     if (idx < 0 || idx >= last7Sleep.length) return;
     const entry = last7Sleep[idx];
     const value = entry.sleep_hours as number;
-    const date = new Date(entry.date + 'T12:00:00').toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'short' });
+    const date = new Date(entry.date + 'T12:00:00').toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' });
     const prevValue = idx > 0 ? (last7Sleep[idx - 1].sleep_hours as number) : null;
     setTooltipData({
       value, label: 'Sleep', date, unit: 'hrs', color: '#818CF8',
@@ -224,7 +224,7 @@ export function SleepTab({ metrics, allMetrics, onUpdateMetrics }: SleepTabProps
     const qualityVal = qualityData[idx];
     const dateStr = last14[idx];
     if (!hoursVal && !qualityVal) return;
-    const date = new Date(dateStr + 'T12:00:00').toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' });
+    const date = new Date(dateStr + 'T12:00:00').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' });
     setTooltipData({
       value: hoursVal, label: 'Sleep', date, unit: 'hrs', color: '#818CF8',
       previousValue: idx > 0 ? sleepHoursData[idx - 1] || null : null,

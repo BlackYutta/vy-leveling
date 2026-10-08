@@ -145,7 +145,7 @@ export function DetailsTab({ event }: { event: ActiveEvent }) {
 
   const formatDateTime = (iso: string) => {
     const d = new Date(iso);
-    return d.toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' });
+    return d.toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
   };
 
   return (

@@ -134,7 +134,7 @@ export function BarChart({
                   fontWeight="700"
                   fontFamily="var(--font-display)"
                 >
-                  ${val.toLocaleString('en-AU', { maximumFractionDigits: 0 })}
+                  ${val.toLocaleString('id-ID', { maximumFractionDigits: 0 })}
                 </text>
               </g>
             );
@@ -267,13 +267,13 @@ export function BarChart({
                 <span style={{ width: 8, height: 8, borderRadius: '50%', background: s.color, display: 'inline-block', flexShrink: 0 }} />
                 <span style={{ color: 'rgba(255,255,255,0.6)' }}>{s.label}:</span>
                 <span style={{ color: s.color, fontWeight: 700, fontFamily: 'var(--font-display)' }}>
-                  ${val.toLocaleString('en-AU', { maximumFractionDigits: 0 })}
+                  ${val.toLocaleString('id-ID', { maximumFractionDigits: 0 })}
                 </span>
               </div>
             );
           })}
           <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', borderTop: '1px solid rgba(255,255,255,0.08)', marginTop: 3, paddingTop: 3, fontWeight: 600 }}>
-            Total: ${series.reduce((s, ser) => s + (ser.data[activeIdx] ?? 0), 0).toLocaleString('en-AU', { maximumFractionDigits: 0 })}
+            Total: ${series.reduce((s, ser) => s + (ser.data[activeIdx] ?? 0), 0).toLocaleString('id-ID', { maximumFractionDigits: 0 })}
           </div>
         </div>
       )}

@@ -40,7 +40,7 @@ export function DashboardRealmInvite() {
     }}>
       <button
         onClick={() => { markRealmOnboardingDone(); setDismissed(true); }}
-        aria-label="Dismiss"
+        aria-label="Tutup"
         style={{
           position: 'absolute', top: 12, right: 12,
           background: 'rgba(255,255,255,0.06)', border: 'none',
@@ -62,17 +62,17 @@ export function DashboardRealmInvite() {
         </div>
         <div>
           <h3 style={{ margin: 0, fontSize: 15, fontWeight: 600, color: '#E2E8F0' }}>
-            Welcome to The Realm <Sparkles size={14} style={{ verticalAlign: -1, color: '#A855F7' }} />
+            Selamat datang di Dunia <Sparkles size={14} style={{ verticalAlign: -1, color: '#A855F7' }} />
           </h3>
           <p style={{ margin: 0, fontSize: 12, color: 'rgba(255,255,255,0.55)' }}>
-            Your personal RPG adventure awaits
+            Petualangan RPG pribadi Anda menanti
           </p>
         </div>
       </div>
 
       <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, margin: '0 0 16px' }}>
-        Create your character, build your town, and turn daily habits into quests.
-        The Realm gamifies your productivity journey.
+        Buat karakter, bangun kota, dan ubah kebiasaan harian menjadi misi.
+        Dunia mengubah perjalanan produktivitas Anda menjadi permainan.
       </p>
 
       <div style={{ display: 'flex', gap: 10 }}>
@@ -85,7 +85,7 @@ export function DashboardRealmInvite() {
             cursor: 'pointer', transition: 'all 0.2s',
           }}
         >
-          Enter The Realm
+          Masuk ke Dunia
         </button>
         <button
           onClick={() => { markRealmOnboardingDone(); setDismissed(true); }}
@@ -97,7 +97,7 @@ export function DashboardRealmInvite() {
             cursor: 'pointer', transition: 'all 0.2s',
           }}
         >
-          Maybe later
+          Nanti saja
         </button>
       </div>
     </div>

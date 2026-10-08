@@ -1,1 +1,1 @@
--- Migration log. Each file is numbered sequentially.
+-- Catatan migrasi. Nomor setiap berkas dibuat berurutan.

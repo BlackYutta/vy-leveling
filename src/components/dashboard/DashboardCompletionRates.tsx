@@ -72,7 +72,7 @@ export function DashboardCompletionRates() {
   const trendData = analytics.daily.slice(-14).map(d => d.rate);
   const trendLabels = analytics.daily.slice(-14).map(d => {
     const date = new Date(d.date + 'T00:00:00');
-    return date.toLocaleDateString('en', { weekday: 'short' });
+    return date.toLocaleDateString('id-ID', { weekday: 'short' });
   });
 
   // Top 3 fastest-moving goals
@@ -213,7 +213,7 @@ export function DashboardCompletionRates() {
                 <div className="dcr-extreme-label">Best Day</div>
                 <div className="dcr-extreme-value">{Math.round(analytics.bestDay.rate)}%</div>
                 <div className="dcr-extreme-date">
-                  {new Date(analytics.bestDay.date + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                  {new Date(analytics.bestDay.date + 'T00:00:00').toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
                   {' · '}{analytics.bestDay.count} tasks
                 </div>
               </div>
@@ -226,7 +226,7 @@ export function DashboardCompletionRates() {
                 <div className="dcr-extreme-label">Needs Work</div>
                 <div className="dcr-extreme-value">{Math.round(analytics.worstDay.rate)}%</div>
                 <div className="dcr-extreme-date">
-                  {new Date(analytics.worstDay.date + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                  {new Date(analytics.worstDay.date + 'T00:00:00').toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
                   {' · '}{analytics.worstDay.count} tasks
                 </div>
               </div>

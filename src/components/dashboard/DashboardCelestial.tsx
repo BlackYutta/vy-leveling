@@ -16,21 +16,21 @@ import {
 import './DashboardCelestial.css';
 
 const PHASE_LABELS: Record<MoonPhaseName, string> = {
-  new: 'New Moon',
-  waxing_crescent: 'Waxing Crescent',
-  first_quarter: 'First Quarter',
-  waxing_gibbous: 'Waxing Gibbous',
-  full: 'Full Moon',
-  waning_gibbous: 'Waning Gibbous',
-  last_quarter: 'Last Quarter',
-  waning_crescent: 'Waning Crescent',
+  new: 'Bulan Baru',
+  waxing_crescent: 'Sabit Muda',
+  first_quarter: 'Perbani Awal',
+  waxing_gibbous: 'Cembung Membesar',
+  full: 'Purnama',
+  waning_gibbous: 'Cembung Mengecil',
+  last_quarter: 'Perbani Akhir',
+  waning_crescent: 'Sabit Tua',
 };
 
 const SEASON_LABELS: Record<string, string> = {
-  spring: 'Spring',
-  summer: 'Summer',
-  autumn: 'Autumn',
-  winter: 'Winter',
+  spring: 'Musim Semi',
+  summer: 'Musim Panas',
+  autumn: 'Musim Gugur',
+  winter: 'Musim Dingin',
 };
 
 function drawMoonPhase(ctx: CanvasRenderingContext2D, size: number, phase: number) {
@@ -127,7 +127,7 @@ export function DashboardCelestial() {
         <div className="dc-next-event">
           <span className="dc-event-name">{nextEvent.name}</span>
           <span className="dc-event-days">
-            {daysUntil(nextEvent.date) === 0 ? 'Today' : `in ${daysUntil(nextEvent.date)}d`}
+            {daysUntil(nextEvent.date) === 0 ? 'Hari ini' : `${daysUntil(nextEvent.date)} hari lagi`}
           </span>
         </div>
       )}

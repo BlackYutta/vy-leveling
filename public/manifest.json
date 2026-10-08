@@ -1,7 +1,7 @@
 {
-  "name": "LifeOS — Free AI Life Operating System",
+  "name": "LifeOS — Sistem Operasi Kehidupan Berbasis AI Gratis",
   "short_name": "LifeOS",
-  "description": "Free AI-powered life operating system. Smart scheduling, habit tracking, goal setting, finance management, journaling, and health tracking — all in one app. The best free Notion alternative and personal operating system.",
+  "description": "Sistem operasi kehidupan berbasis AI gratis. Jadwal cerdas, pelacakan kebiasaan, penetapan tujuan, pengelolaan keuangan, jurnal, dan kesehatan — semuanya dalam satu aplikasi. Alternatif Notion gratis dan sistem operasi pribadi.",
   "start_url": "/app/",
   "scope": "/app/",
   "id": "/app/",
@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "background_color": "#050E1A",
   "theme_color": "#050E1A",
-  "lang": "en",
+  "lang": "id",
   "dir": "ltr",
   "categories": ["productivity", "lifestyle", "finance", "health", "utilities"],
   "iarc_rating_id": "",
@@ -43,30 +43,30 @@
   "screenshots": [],
   "shortcuts": [
     {
-      "name": "Schedule",
-      "short_name": "Schedule",
-      "description": "View and manage your daily AI-powered schedule",
+      "name": "Jadwal",
+      "short_name": "Jadwal",
+      "description": "Lihat dan kelola jadwal harian berbasis AI",
       "url": "/app/schedule",
       "icons": [{ "src": "/app/icons/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Habits",
-      "short_name": "Habits",
-      "description": "Track your daily habits and streaks",
+      "name": "Kebiasaan",
+      "short_name": "Kebiasaan",
+      "description": "Lacak kebiasaan harian dan rangkaian konsistensi Anda",
       "url": "/app/habits",
       "icons": [{ "src": "/app/icons/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Goals",
-      "short_name": "Goals",
-      "description": "Set and track your life goals",
+      "name": "Tujuan",
+      "short_name": "Tujuan",
+      "description": "Tetapkan dan lacak tujuan hidup Anda",
       "url": "/app/goals",
       "icons": [{ "src": "/app/icons/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "Finances",
-      "short_name": "Finances",
-      "description": "Manage income, expenses, and budgets",
+      "name": "Keuangan",
+      "short_name": "Keuangan",
+      "description": "Kelola pemasukan, pengeluaran, dan anggaran",
       "url": "/app/finances",
       "icons": [{ "src": "/app/icons/icon-192.png", "sizes": "192x192" }]
     }

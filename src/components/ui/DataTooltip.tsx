@@ -116,7 +116,7 @@ export function DataTooltip({ data, position, onDismiss, autoDismissMs = 4000 }:
       </div>
       
       <div className="data-tooltip-value" style={{ color: trendColor }}>
-        {typeof data.value === 'number' ? data.value.toLocaleString('en-AU', { maximumFractionDigits: 2 }) : data.value}
+        {typeof data.value === 'number' ? data.value.toLocaleString('id-ID', { maximumFractionDigits: 2 }) : data.value}
         {data.unit && <span className="data-tooltip-unit">{data.unit}</span>}
       </div>
 

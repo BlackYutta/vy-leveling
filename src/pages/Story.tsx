@@ -245,7 +245,7 @@ export function Story() {
             <header className="story-entry-header">
               <div className="story-entry-meta">
                 <Calendar size={14} />
-                <time>{new Date(selectedEntry.entry_date).toLocaleDateString('en-US', {
+                <time>{new Date(selectedEntry.entry_date).toLocaleDateString('id-ID', {
                   weekday: 'long',
                   year: 'numeric',
                   month: 'long',

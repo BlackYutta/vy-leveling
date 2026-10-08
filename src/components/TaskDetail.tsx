@@ -277,7 +277,7 @@ export function TaskDetail({ taskId, allGoals, allTasks, onClose, onNavigateToNo
               ) : (
                 <button onClick={() => setShowDatePicker(true)} className="td-btn-ghost">
                   <Calendar size={12} />
-                  {task.due_date ? new Date(task.due_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Set date'}
+                  {task.due_date ? new Date(task.due_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Set date'}
                 </button>
               )}
             </div>
@@ -371,12 +371,12 @@ export function TaskDetail({ taskId, allGoals, allTasks, onClose, onNavigateToNo
           <div className="td-activity">
             <div className="td-section-label">Activity</div>
             <div>
-              {task.created_at && <div className="td-activity-item">Created {new Date(task.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>}
+              {task.created_at && <div className="td-activity-item">Created {new Date(task.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>}
               {task.completed_at && (
-                <div className="td-activity-item completed"><CheckCircle size={12} style={{ marginRight: 4, verticalAlign: 'middle', display: 'inline' }} />Completed {new Date(task.completed_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+                <div className="td-activity-item completed"><CheckCircle size={12} style={{ marginRight: 4, verticalAlign: 'middle', display: 'inline' }} />Completed {new Date(task.completed_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
               )}
               {task.due_date && task.created_at && new Date(task.created_at).toISOString().split('T')[0] !== task.due_date && (
-                <div className="td-activity-item"><Calendar size={12} style={{ marginRight: 4, verticalAlign: 'middle', display: 'inline' }} />Rescheduled to {new Date(task.due_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
+                <div className="td-activity-item"><Calendar size={12} style={{ marginRight: 4, verticalAlign: 'middle', display: 'inline' }} />Rescheduled to {new Date(task.due_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
               )}
             </div>
           </div>

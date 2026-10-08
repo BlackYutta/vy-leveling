@@ -287,7 +287,7 @@ export async function generateWeeklyInsights(
   // ── Week label ──
   const startDate = new Date(weekStart + 'T00:00:00');
   const endDate = new Date(weekEnd + 'T00:00:00');
-  const weekLabel = `${startDate.toLocaleDateString('en-AU', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('en-AU', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+  const weekLabel = `${startDate.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })} - ${endDate.toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })}`;
 
   // ── AI Narrative (Pro feature) ──
   let aiNarrative: string | null = null;

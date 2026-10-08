@@ -1,28 +1,28 @@
 /**
- * Shared Date Utilities — LifeOS
+ * Utilitas tanggal bersama — LifeOS
  *
- * Single source of truth for all date formatting/manipulation.
- * Replaces 18+ inline implementations scattered across pages.
+ * Sumber tunggal untuk pemformatan dan manipulasi tanggal.
+ * Menggantikan lebih dari 18 implementasi terpisah di berbagai halaman.
  */
 
-const DAYS_SHORT = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const DAYS_SHORT = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB'];
+const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
 
 /**
- * Parse a date string in a Safari-safe way.
- * Safari rejects `new Date('2026-02-21 10:00')` — must use ISO format with T separator.
- * This function normalises space-separated datetimes to ISO format.
+ * Uraikan string tanggal dengan cara yang aman untuk Safari.
+ * Safari menolak `new Date('2026-02-21 10:00')`; gunakan format ISO dengan pemisah T.
+ * Fungsi ini menormalkan tanggal-waktu yang dipisahkan spasi menjadi format ISO.
  */
 export function safeDateParse(dateStr: string): Date {
   if (!dateStr) return new Date();
-  // Replace space separator with T for ISO compliance (Safari requirement)
+  // Ganti pemisah spasi dengan T agar sesuai ISO (persyaratan Safari).
   const normalised = dateStr.replace(/^(\d{4}-\d{2}-\d{2})\s+(\d)/, '$1T$2');
   return new Date(normalised);
 }
 
 /**
- * Safe storage helper — wraps localStorage to handle Safari private browsing
- * which throws on setItem/removeItem.
+ * Pembungkus penyimpanan yang aman untuk menangani mode privat Safari,
+ * yang dapat melempar galat saat setItem/removeItem dipanggil.
  */
 export function safeStorage(op: 'get', key: string): string | null;
 export function safeStorage(op: 'set', key: string, value: string): void;
@@ -35,35 +35,35 @@ export function safeStorage(op: 'get' | 'set' | 'remove', key: string, value?: s
       case 'remove': localStorage.removeItem(key); return;
     }
   } catch {
-    // Safari private browsing throws on storage writes
+    // Mode privat Safari dapat melempar galat saat menulis ke penyimpanan.
     if (op === 'get') return null;
   }
 }
 
 /**
- * Format a Date to YYYY-MM-DD local string (no timezone drift).
+ * Format objek Date menjadi string lokal YYYY-MM-DD (tanpa pergeseran zona waktu).
  */
 export function localDateStr(d: Date = new Date()): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
 /**
- * Format a date for display: "Today", "Yesterday", "Tomorrow", or "WED, 14 Feb"
+ * Format tanggal untuk ditampilkan: "Hari Ini", "Kemarin", "Besok", atau "RAB, 14 Feb".
  */
 export function formatDate(iso: string): string {
-  const d = new Date(iso + 'T12:00:00'); // noon to avoid timezone drift
+  const d = new Date(iso + 'T12:00:00'); // Gunakan tengah hari untuk menghindari pergeseran zona waktu.
   const now = new Date();
   const todayIso = localDateStr(now);
   const yest = new Date(now); yest.setDate(now.getDate() - 1);
   const tom = new Date(now); tom.setDate(now.getDate() + 1);
-  if (iso === todayIso) return 'Today';
-  if (iso === localDateStr(yest)) return 'Yesterday';
-  if (iso === localDateStr(tom)) return 'Tomorrow';
+  if (iso === todayIso) return 'Hari Ini';
+  if (iso === localDateStr(yest)) return 'Kemarin';
+  if (iso === localDateStr(tom)) return 'Besok';
   return `${DAYS_SHORT[d.getDay()]}, ${d.getDate()} ${MONTHS_SHORT[d.getMonth()]}`;
 }
 
 /**
- * Extract HH:MM from an ISO datetime string.
+ * Ambil HH:MM dari string tanggal-waktu ISO.
  */
 export function formatTime(isoDatetime: string): string {
   if (!isoDatetime) return '--:--';
@@ -72,7 +72,7 @@ export function formatTime(isoDatetime: string): string {
 }
 
 /**
- * Format a date as a short relative label: "2d ago", "in 3h", "just now"
+ * Format tanggal menjadi keterangan waktu relatif singkat.
  */
 export function formatRelative(isoDatetime: string): string {
   const target = new Date(isoDatetime);
@@ -81,38 +81,38 @@ export function formatRelative(isoDatetime: string): string {
   const absDiff = Math.abs(diffMs);
   const isPast = diffMs > 0;
 
-  if (absDiff < 60_000) return 'just now';
+  if (absDiff < 60_000) return 'baru saja';
 
   const mins = Math.floor(absDiff / 60_000);
-  if (mins < 60) return isPast ? `${mins}m ago` : `in ${mins}m`;
+  if (mins < 60) return isPast ? `${mins} menit lalu` : `dalam ${mins} menit`;
 
   const hours = Math.floor(mins / 60);
-  if (hours < 24) return isPast ? `${hours}h ago` : `in ${hours}h`;
+  if (hours < 24) return isPast ? `${hours} jam lalu` : `dalam ${hours} jam`;
 
   const days = Math.floor(hours / 24);
-  if (days < 7) return isPast ? `${days}d ago` : `in ${days}d`;
+  if (days < 7) return isPast ? `${days} hari lalu` : `dalam ${days} hari`;
 
   const weeks = Math.floor(days / 7);
-  if (weeks < 5) return isPast ? `${weeks}w ago` : `in ${weeks}w`;
+  if (weeks < 5) return isPast ? `${weeks} minggu lalu` : `dalam ${weeks} minggu`;
 
   const months = Math.floor(days / 30);
-  return isPast ? `${months}mo ago` : `in ${months}mo`;
+  return isPast ? `${months} bulan lalu` : `dalam ${months} bulan`;
 }
 
 /**
- * Format a duration in minutes to human-readable: "1h 30m", "45m", "2h"
+ * Format durasi dalam menit menjadi teks yang mudah dibaca.
  */
 export function formatDuration(minutes: number): string {
-  if (minutes < 1) return '0m';
+  if (minutes < 1) return '0 menit';
   const h = Math.floor(minutes / 60);
   const m = Math.round(minutes % 60);
-  if (h === 0) return `${m}m`;
-  if (m === 0) return `${h}h`;
-  return `${h}h ${m}m`;
+  if (h === 0) return `${m} menit`;
+  if (m === 0) return `${h} jam`;
+  return `${h} jam ${m} menit`;
 }
 
 /**
- * Get the short day name for a Date: "MON", "TUE", etc.
+ * Ambil nama singkat hari dari objek Date: "SEN", "SEL", dan seterusnya.
  */
 export function getDayName(d: Date): string {
   return DAYS_SHORT[d.getDay()];
@@ -179,11 +179,11 @@ export function daysFromNow(dateStr: string): number {
 }
 
 /**
- * Format a date for en-AU short display: "14 Feb"
+ * Format tanggal untuk tampilan singkat berbahasa Indonesia, misalnya "14 Feb".
  */
 export function formatDateShort(dateStr: string): string {
   const d = new Date(dateStr + 'T00:00:00');
-  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+  return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
 }
 
 /**
@@ -191,11 +191,11 @@ export function formatDateShort(dateStr: string): string {
  */
 export function getGreeting(): string {
   const h = new Date().getHours();
-  if (h < 6) return 'Night owl mode';
-  if (h < 12) return 'Good morning';
-  if (h < 17) return 'Good afternoon';
-  if (h < 21) return 'Good evening';
-  return 'Night owl mode';
+  if (h < 6) return 'Masih terjaga';
+  if (h < 12) return 'Selamat pagi';
+  if (h < 17) return 'Selamat siang';
+  if (h < 21) return 'Selamat sore';
+  return 'Masih terjaga';
 }
 
 /**
@@ -234,7 +234,7 @@ export function genId(): string {
  */
 export function fmtCurrency(n: number): string {
   const abs = Math.abs(n);
-  return `$${abs.toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  return `$${abs.toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 /**

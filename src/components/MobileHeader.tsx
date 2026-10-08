@@ -48,7 +48,7 @@ export function MobileHeader({ onMenuToggle }: { onMenuToggle: () => void }) {
   return (
     <>
       <header className="mobile-header">
-        <button className="mh-hamburger" onClick={onMenuToggle} aria-label="Toggle menu">
+        <button className="mh-hamburger" onClick={onMenuToggle} aria-label="Buka/tutup menu">
           <Menu size={20} />
         </button>
         <div className="mh-logo" onClick={() => {
@@ -93,7 +93,7 @@ export function MobileHeader({ onMenuToggle }: { onMenuToggle: () => void }) {
           )}
           {/* Notifications bell */}
           <button
-            aria-label="Notifications"
+            aria-label="Notifikasi"
             className="mh-command mh-notif-btn"
             onClick={() => setNotifOpen(prev => !prev)}
           >
@@ -102,14 +102,14 @@ export function MobileHeader({ onMenuToggle }: { onMenuToggle: () => void }) {
           </button>
           {/* Messages */}
           <button
-            aria-label="Messages"
+            aria-label="Pesan"
             className="mh-command"
             onClick={() => navigate('/social?tab=messages')}
           >
             <MessageCircle size={16} />
           </button>
           {/* Character page */}
-          <button aria-label="Character" className="mh-command mh-character-btn" onClick={() => navigate('/character')}>
+          <button aria-label="Karakter" className="mh-command mh-character-btn" onClick={() => navigate('/character')}>
             <Swords size={14} />
           </button>
           {/* Character avatar */}

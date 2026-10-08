@@ -1,37 +1,37 @@
-# LifeOS Local Mode
+# Mode Lokal LifeOS
 
-> Run LifeOS entirely offline with a local Flask API instead of Supabase.
+> Jalankan LifeOS sepenuhnya secara lokal menggunakan Flask API, tanpa Supabase.
 
-## Overview
+## Ringkasan
 
-LifeOS was built on Supabase (PostgreSQL + Auth + Realtime). This adapter layer replaces Supabase with a local Flask API, enabling fully offline operation.
+LifeOS awalnya dibangun menggunakan Supabase (PostgreSQL + Auth + Realtime). Lapisan adapter ini mengganti Supabase dengan Flask API lokal agar aplikasi dapat beroperasi secara luring.
 
-**152 files** reference Supabase across the codebase. The migration uses a drop-in adapter that mimics Supabase's chainable query interface.
+Sebanyak **152 berkas** merujuk ke Supabase di seluruh basis kode. Migrasi ini menggunakan adapter pengganti yang meniru antarmuka kueri berantai Supabase.
 
-## Architecture
+## Arsitektur
 
 ```
-Before:  React App → Supabase JS Client → Supabase Cloud (PostgreSQL)
-After:   React App → Local API Adapter  → Flask API (localhost:8080) → SQLite/PostgreSQL
+Sebelum: React App → Supabase JS Client → Supabase Cloud (PostgreSQL)
+Sesudah: React App → Local API Adapter → Flask API (localhost:8080) → SQLite/PostgreSQL
 ```
 
-### Files Created
+### Berkas yang Dibuat
 
-| File | Purpose |
+| Berkas | Kegunaan |
 |------|---------|
-| `src/lib/local-api.ts` | Drop-in replacement for `src/lib/supabase.ts` |
-| `scripts/localize.sh` | Find-and-replace script (reversible with `.bak` files) |
-| `.env.local` | Environment config for local mode |
-| `LOCAL_MODE.md` | This documentation |
+| `src/lib/local-api.ts` | Adapter pengganti untuk `src/lib/supabase.ts` |
+| `scripts/localize.sh` | Skrip pencarian dan penggantian (dapat dibatalkan dengan berkas `.bak`) |
+| `.env.local` | Konfigurasi lingkungan untuk mode lokal |
+| `LOCAL_MODE.md` | Dokumentasi ini |
 
-## How the Adapter Works
+## Cara Kerja Adapter
 
-### Query Builder (chainable, Supabase-compatible)
+### Pembuat Kueri (berantai dan kompatibel dengan Supabase)
 
-The adapter mimics Supabase's PostgREST query builder. All chains are **lazy** — they only fire when `await`ed:
+Adapter ini meniru pembuat kueri PostgREST milik Supabase. Semua rantai bersifat **lazy** — permintaan baru dijalankan ketika di-`await`:
 
 ```typescript
-// These work identically to Supabase:
+// Contoh berikut bekerja seperti pada Supabase:
 const { data, error } = await supabase.from('tasks').select('*').eq('status', 'active');
 const { data, error } = await supabase.from('tasks').insert({ title: 'New' }).select().single();
 const { data, error } = await supabase.from('tasks').update({ done: true }).eq('id', '123');
@@ -40,15 +40,15 @@ const { data, error } = await supabase.from('tasks').upsert(data, { onConflict: 
 const { data, error } = await supabase.rpc('get_table_columns', { table_names: ['tasks'] });
 ```
 
-### Supported filter methods
+### Metode filter yang didukung
 
-`.eq()` `.neq()` `.gt()` `.gte()` `.lt()` `.lte()` `.like()` `.ilike()` `.is()` `.in()` `.contains()` `.or()` `.filter()`
+`.eq()` `.neq()` `.gt()` `.gte()` `.lt()` `.lte()` `.like()` `.ilike()` `.is()` `.not()` `.in()` `.contains()` `.or()` `.filter()`
 
-### Supported modifiers
+### Modifier yang didukung
 
 `.order()` `.limit()` `.range()` `.single()` `.maybeSingle()` `.select('columns')`
 
-### Auth (simplified local auth)
+### Autentikasi (autentikasi lokal sederhana)
 
 ```typescript
 await supabase.auth.signUp({ email, password });
@@ -59,61 +59,61 @@ await supabase.auth.getSession();
 supabase.auth.onAuthStateChange((event, session) => { ... });
 ```
 
-OAuth providers are **not supported** in local mode — returns a helpful error.
+Penyedia OAuth **tidak didukung** dalam mode lokal; adapter akan mengembalikan pesan kesalahan yang menjelaskan hal tersebut.
 
-### Response format
+### Format respons
 
-All responses match Supabase's shape:
+Semua respons mengikuti struktur Supabase:
 ```typescript
 { data: T | null, error: { message, details, hint, code } | null, status: number }
 ```
 
-## Migration Steps
+## Langkah Migrasi
 
-### Step 1: Set up environment
+### Langkah 1: Siapkan lingkungan
 ```bash
 cp .env.local .env  # or merge into existing .env
 ```
 
-### Step 2: Dry run the migration script
+### Langkah 2: Jalankan simulasi skrip migrasi
 ```bash
 bash scripts/localize.sh
-# Shows what would change without modifying files
+# Menampilkan perubahan yang akan dilakukan tanpa mengubah berkas
 ```
 
-### Step 3: Apply the migration
+### Langkah 3: Terapkan migrasi
 ```bash
 bash scripts/localize.sh --apply
-# Creates .bak backups and replaces imports
+# Membuat cadangan .bak dan mengganti import
 ```
 
-### Step 4: Manual fixes required
+### Langkah 4: Perbaikan manual yang diperlukan
 
-These files need manual attention:
+Berkas berikut memerlukan penanganan manual:
 
 #### `src/lib/systems/adapters/tcs.ts`
-Has its own `createClient()` for a separate Supabase instance (TCS business data). Options:
-- Create a second Flask API endpoint for TCS
-- Merge TCS tables into the main local API
-- Keep TCS on Supabase while main app runs locally
+Memiliki `createClient()` sendiri untuk instans Supabase terpisah (data bisnis TCS). Pilihannya:
+- Buat endpoint Flask API kedua untuk TCS
+- Gabungkan tabel TCS ke Local API utama
+- Tetap gunakan Supabase untuk TCS saat aplikasi utama berjalan secara lokal
 
 #### `src/stores/useUserStore.ts`
-Contains Supabase-specific auth key parsing (`sb-${ref}-auth-token`). The local adapter uses `local_auth_session` in localStorage instead. The auth state listener pattern is preserved.
+Memuat penguraian kunci autentikasi khusus Supabase (`sb-${ref}-auth-token`). Adapter lokal menggunakan `local_auth_session` di localStorage. Pola listener status autentikasi tetap dipertahankan.
 
-#### `src/lib/feature-gates.ts` and `src/lib/local-db.ts`
-Reference `VITE_SUPABASE_URL` to extract a project ref. The `.env.local` provides a dummy value to prevent crashes.
+#### `src/lib/feature-gates.ts` dan `src/lib/local-db.ts`
+Merujuk `VITE_SUPABASE_URL` untuk mengambil referensi proyek. Mode lokal tidak memerlukan URL atau kunci Supabase; client Supabase dibuat hanya saat fitur cloud digunakan.
 
-### Step 5: Revert if needed
+### Langkah 5: Batalkan jika diperlukan
 ```bash
 bash scripts/localize.sh --revert
 # Restores all .bak files to their originals
 ```
 
-## Flask API Requirements
+## Persyaratan Flask API
 
-The local Flask API at `localhost:8080` must implement these endpoints:
+Flask API lokal di `localhost:8080` harus menyediakan endpoint berikut:
 
-### Data endpoints (per table)
+### Endpoint data (per tabel)
 ```
 GET    /api/{table}?select=...&column=op.value&order=...&limit=...
 POST   /api/{table}                  → Insert row(s)
@@ -122,7 +122,7 @@ PUT    /api/{table}?on_conflict=col  → Upsert
 DELETE /api/{table}?column=eq.value  → Delete matching rows
 ```
 
-### Query parameter format (PostgREST-style)
+### Format parameter kueri (gaya PostgREST)
 ```
 ?select=id,title,status          → Column selection
 ?status=eq.active                → Filter: column = value
@@ -133,54 +133,54 @@ DELETE /api/{table}?column=eq.value  → Delete matching rows
 ?single=true                    → Return single object (not array)
 ```
 
-### RPC endpoints
+### Endpoint RPC
 ```
 POST /api/rpc/{function_name}    → body: { param1: val1, ... }
 ```
 
-### Auth endpoints
+### Endpoint autentikasi
 ```
 POST /api/auth/signup             → { email, password }
 POST /api/auth/login              → { email, password }
-POST /api/auth/logout             → (with Authorization header)
+POST /api/auth/logout             → (dengan header Authorization)
 POST /api/auth/refresh            → { refresh_token }
-GET  /api/auth/user               → (with Authorization header)
+GET  /api/auth/user               → (dengan header Authorization)
 POST /api/auth/reset-password     → { email }
 ```
 
-### Tables used by LifeOS
+### Tabel yang digunakan LifeOS
 
-Based on codebase analysis, the Flask API needs these tables:
+Berdasarkan analisis basis kode, Flask API memerlukan tabel berikut:
 
-| Table | Used by |
+| Tabel | Digunakan oleh |
 |-------|---------|
-| `tasks` | Goals, Tasks, Schedule |
-| `habits` | Habits tracking |
-| `habit_logs` | Habit completion logs |
-| `goals` | Goal tracking |
-| `health_metrics` | Health/wellness data |
-| `schedule_events` | Calendar/schedule |
-| `event_completions` | Event completion tracking |
-| `journal_entries` | Journal |
-| `income` | Finance - income |
-| `expenses` | Finance - expenses |
-| `transactions` | Finance - transactions |
-| `unified_events` | Cross-feature event log |
-| `user_profiles` | User preferences/settings |
-| `ai_insights` | AI-generated insights |
-| `rpg_characters` | RPG/gamification |
-| `ui_preferences` | UI state persistence |
+| `tasks` | Tujuan, tugas, jadwal |
+| `habits` | Pelacakan kebiasaan |
+| `habit_logs` | Catatan penyelesaian kebiasaan |
+| `goals` | Pelacakan tujuan |
+| `health_metrics` | Data kesehatan/kebugaran |
+| `schedule_events` | Kalender/jadwal |
+| `event_completions` | Pelacakan penyelesaian acara |
+| `journal_entries` | Jurnal |
+| `income` | Keuangan — pemasukan |
+| `expenses` | Keuangan — pengeluaran |
+| `transactions` | Keuangan — transaksi |
+| `unified_events` | Catatan acara lintas fitur |
+| `user_profiles` | Preferensi/pengaturan pengguna |
+| `ai_insights` | Wawasan yang dibuat AI |
+| `rpg_characters` | RPG/gamifikasi |
+| `ui_preferences` | Penyimpanan status antarmuka |
 
-## What's NOT Migrated
+## Yang Belum Dimigrasikan
 
-1. **Realtime subscriptions** — Supabase's realtime websocket channels. The local API uses polling instead.
-2. **Row-Level Security (RLS)** — The Flask API should implement its own auth middleware.
-3. **Storage (file uploads)** — If used, needs a separate local file storage solution.
-4. **Edge Functions** — Any Supabase Edge Functions need Flask route equivalents.
+1. **Langganan realtime** — Kanal WebSocket realtime Supabase. Local API menggunakan polling sebagai gantinya.
+2. **Row-Level Security (RLS)** — Flask API perlu menerapkan middleware autentikasinya sendiri.
+3. **Penyimpanan (unggahan berkas)** — Jika digunakan, diperlukan solusi penyimpanan berkas lokal terpisah.
+4. **Edge Functions** — Setiap Supabase Edge Function memerlukan padanan route Flask.
 
-## Development Notes
+## Catatan Pengembangan
 
-- The adapter auto-attaches `Authorization: Bearer <token>` from localStorage
-- The `dedup()` helper is preserved for request deduplication
-- The `.env.local` includes dummy `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to prevent the original `supabase.ts` from throwing during migration
-- All query chains implement `PromiseLike` (thenable) so they work with `await`
+- Adapter otomatis menyertakan `Authorization: Bearer <token>` dari localStorage
+- Helper `dedup()` tetap digunakan untuk mencegah permintaan duplikat
+- Mode Local API tidak memerlukan `VITE_SUPABASE_URL` maupun `VITE_SUPABASE_ANON_KEY`
+- Semua rantai kueri mengimplementasikan `PromiseLike` (thenable) agar dapat digunakan dengan `await`

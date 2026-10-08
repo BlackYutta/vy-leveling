@@ -828,7 +828,7 @@ export function ExerciseTab({ templates, logs, onSaveTemplate, onDeleteTemplate,
       <div className="glass-card hv2-history-card">
         {logs.slice(0, 10).map((log: ExerciseLog) => (
           <div key={log.id} className={`hv2-history-item ${log.completed ? '' : 'skipped'}`}>
-            <div className="hv2-hi-date">{new Date(log.date + 'T12:00:00').toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' })}</div>
+            <div className="hv2-hi-date">{new Date(log.date + 'T12:00:00').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' })}</div>
             <span className="hv2-hi-icon"><EmojiIcon emoji={log.template?.icon || '💪'} size={18} fallbackAsText /></span>
             <div className="hv2-hi-name">{log.template?.name || 'Custom Workout'}</div>
             {log.completed && <span className="hv2-hi-meta">{log.duration_min}min</span>}

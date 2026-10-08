@@ -79,7 +79,7 @@ export function QuickJournal({ open, onClose }: Props) {
       const newEntry = {
         user_id: user.id,
         date: today,
-        title: `Quick note — ${new Date().toLocaleDateString('en', { month: 'short', day: 'numeric' })}`,
+        title: `Quick note — ${new Date().toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}`,
         content: content.trim(),
         mood: mood,
         tags: '',

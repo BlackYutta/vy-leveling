@@ -22,7 +22,7 @@ export function MindTab({ meditationLogs, gratitudeEntries, onLogMeditation, onA
   });
   const moodData = last14.map((date: string) => allMetrics.find((m: HealthMetrics) => m.date === date)?.mood_score || 0);
   const energyData = last14.map((date: string) => allMetrics.find((m: HealthMetrics) => m.date === date)?.energy_score || 0);
-  const chartLabels = last14.map((d: string, i: number) => i % 2 === 0 ? new Date(d + 'T12:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' }) : '');
+  const chartLabels = last14.map((d: string, i: number) => i % 2 === 0 ? new Date(d + 'T12:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) : '');
 
   const meditationGoalMins = 15;
   const meditationPct = Math.min((totalMins / meditationGoalMins) * 100, 100);
@@ -117,7 +117,7 @@ export function MindTab({ meditationLogs, gratitudeEntries, onLogMeditation, onA
               title={(() => {
                 const d = new Date();
                 d.setDate(d.getDate() - (13 - i));
-                return d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' });
+                return d.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' });
               })()}
             />
           ))}

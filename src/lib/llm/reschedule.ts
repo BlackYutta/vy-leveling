@@ -84,7 +84,7 @@ export async function getAIRescheduleSuggestions(
   ]);
 
   const upcomingEvents = (eventsRes.data || []).map((e: { title: string; start_time: string; event_type?: string }) =>
-    `• ${e.title} — ${new Date(e.start_time).toLocaleDateString('en-AU', { weekday: 'short', month: 'short', day: 'numeric' })} ${new Date(e.start_time).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true })}${e.end_time ? ` to ${new Date(e.end_time).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true })}` : ''}`
+    `• ${e.title} — ${new Date(e.start_time).toLocaleDateString('id-ID', { weekday: 'short', month: 'short', day: 'numeric' })} ${new Date(e.start_time).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true })}${e.end_time ? ` to ${new Date(e.end_time).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true })}` : ''}`
   ).join('\n');
 
   const upcomingTasks = (tasksRes.data || []).map((t: { title: string; due_date?: string; priority?: string; status: string; updated_at?: string }) =>
@@ -97,7 +97,7 @@ export async function getAIRescheduleSuggestions(
   ).join('\n');
 
   const missedEventsList = missedEvents.map(e =>
-    `• EVENT id="${e.id}": "${e.title}" — was scheduled ${new Date(e.start_time).toLocaleDateString('en-AU', { weekday: 'short', month: 'short', day: 'numeric' })} (${e.daysMissed} days ago)`
+    `• EVENT id="${e.id}": "${e.title}" — was scheduled ${new Date(e.start_time).toLocaleDateString('id-ID', { weekday: 'short', month: 'short', day: 'numeric' })} (${e.daysMissed} days ago)`
   ).join('\n');
 
   // Build reschedule history — tasks where updated_at significantly differs from created_at
@@ -108,12 +108,12 @@ export async function getAIRescheduleSuggestions(
     return (updated - created) > 86400000; // updated > 1 day after creation
   });
   const rescheduleHistory = rescheduledTasks.length > 0
-    ? rescheduledTasks.map((t: { title: string; due_date?: string; updated_at: string }) => `• "${t.title}" — due ${t.due_date}, last updated ${new Date(t.updated_at).toLocaleDateString('en-AU', { month: 'short', day: 'numeric' })}`).join('\n')
+    ? rescheduledTasks.map((t: { title: string; due_date?: string; updated_at: string }) => `• "${t.title}" — due ${t.due_date}, last updated ${new Date(t.updated_at).toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}`).join('\n')
     : '';
 
   const prompt = `You are LifeOS, helping a user reschedule their overdue tasks and missed events.
 
-Today: ${today} (${new Date().toLocaleDateString('en-AU', { weekday: 'long' })})
+Today: ${today} (${new Date().toLocaleDateString('id-ID', { weekday: 'long' })})
 
 ## OVERDUE TASKS
 ${overdueTasksList || '(none)'}

@@ -31,7 +31,7 @@ const ASSET_TYPE_CONFIG: Record<AssetType, { label: string; icon: typeof Home; c
 // ── Helpers ──
 
 function formatCurrency(amount: number): string {
-  return `$${amount.toLocaleString('en-AU', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+  return `$${amount.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 }
 
 function daysUntil(dateStr: string): number {

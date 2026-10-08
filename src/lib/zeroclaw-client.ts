@@ -181,7 +181,7 @@ export async function agentChat(request: AgentChatRequest): Promise<AgentChatRes
   // Add time-of-day awareness
   const now = new Date();
   const timeStr = now.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit' });
-  const dayStr = now.toLocaleDateString('en-AU', { weekday: 'long' });
+  const dayStr = now.toLocaleDateString('id-ID', { weekday: 'long' });
   const timeContext = `Current time: ${timeStr}, ${dayStr}`;
   ctxStr = timeContext + (ctxStr ? '\n' + ctxStr : '');
   const messages = buildMessages(request, ctxStr);

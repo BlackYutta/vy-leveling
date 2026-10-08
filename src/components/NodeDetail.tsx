@@ -512,7 +512,7 @@ export function NodeDetail({ nodeId, allGoals, allTasks, onClose, onNavigate, on
                   {node?.target_date && (
                     <div className="text-[11px] text-white/40 flex items-center gap-1.5">
                       <Calendar size={12} className="mr-1 align-middle" />
-                      {new Date(node.target_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {new Date(node.target_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                       {node.deadline_type && (
                         <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.06] text-white/50">
                           {node.deadline_type}
@@ -692,7 +692,7 @@ export function NodeDetail({ nodeId, allGoals, allTasks, onClose, onNavigate, on
                   <Circle size={16} className="text-white/30 shrink-0" />
                   <span className="flex-1 text-xs text-white">{t.title}</span>
                   {t.priority && <span className="text-[9px] px-1.5 py-0.5 rounded bg-white/[0.06] text-white/50">{t.priority}</span>}
-                  {t.due_date && <span className="text-[10px] text-white/30">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span>}
+                  {t.due_date && <span className="text-[10px] text-white/30">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>}
                 </div>
               ))}
 

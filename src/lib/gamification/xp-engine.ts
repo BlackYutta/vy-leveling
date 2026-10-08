@@ -89,10 +89,10 @@ export function getStreakMultiplier(streakDays: number): number {
 }
 
 export function getStreakLabel(streakDays: number): string {
-  if (streakDays >= 100) return '🔥💀 IMMORTAL STREAK';
-  if (streakDays >= 30) return '🔥🔥 UNSTOPPABLE';
-  if (streakDays >= 7) return '🔥 ON FIRE';
-  if (streakDays >= 3) return '✨ Warming up';
+  if (streakDays >= 100) return '🔥💀 RANGKAIAN ABADI';
+  if (streakDays >= 30) return '🔥🔥 TAK TERHENTIKAN';
+  if (streakDays >= 7) return '🔥 MEMBARA';
+  if (streakDays >= 3) return '✨ MULAI MENYALA';
   return '';
 }
 

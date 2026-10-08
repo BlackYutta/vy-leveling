@@ -80,7 +80,7 @@ function LayoutInner() {
     <>
     <div className="layout">
       {/* Skip to content link for keyboard users */}
-      <a href="#main-content" className="skip-to-content" style={{ position: 'absolute', left: '-9999px', top: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>Skip to content</a>
+      <a href="#main-content" className="skip-to-content" style={{ position: 'absolute', left: '-9999px', top: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>Lewati ke konten</a>
 
       {/* Desktop sidebar — hidden on mobile, slides in via CSS transform */}
       <div className={`sidebar-wrap ${mobileMenuOpen ? 'mobile-open' : ''}`}>

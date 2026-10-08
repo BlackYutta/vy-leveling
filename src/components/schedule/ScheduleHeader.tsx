@@ -70,7 +70,7 @@ export function ScheduleHeader({
             </button>
             <div className="sched-date-info">
               <h1 className="sched-title">
-                Week of {weekStartDate?.toLocaleDateString('en-AU', { month: 'short', day: 'numeric' })}
+                Week of {weekStartDate?.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
               </h1>
               <button className="sched-today-btn" onClick={onGoToday}>
                 ← This week

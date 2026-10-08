@@ -5,46 +5,46 @@
 <h1 align="center">LifeOS</h1>
 
 <p align="center">
-  <strong>Your life is the game. Level up for real.</strong>
+  <strong>Hidup adalah permainanmu. Naik level di dunia nyata.</strong>
 </p>
 
 <p align="center">
-  <a href="https://app.runlifeos.com">Use LifeOS Free</a> · 
-  <a href="https://runlifeos.com">Website</a> · 
-  <a href="#self-hosting">Self-Host</a> · 
-  <a href="#contributing">Contribute</a>
+  <a href="https://app.runlifeos.com">Gunakan LifeOS Gratis</a> ·
+  <a href="https://runlifeos.com">Situs Web</a> ·
+  <a href="#menjalankan-sendiri">Jalankan Sendiri</a> ·
+  <a href="#kontribusi">Berkontribusi</a>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-1.19.20-blue" alt="Version" />
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License" />
-  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="PRs Welcome" />
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="Kontribusi PR diterima" />
   <img src="https://img.shields.io/badge/platform-PWA-orange" alt="PWA" />
 </p>
 
 ---
 
-LifeOS is an open-source personal operating system that turns your goals, habits, finances, health, and daily schedule into a living RPG. Built as a progressive web app — install it on any device, works offline, syncs when connected.
+LifeOS adalah sistem operasi pribadi sumber terbuka yang mengubah tujuan, kebiasaan, keuangan, kesehatan, dan jadwal harian Anda menjadi RPG yang hidup. Dibangun sebagai aplikasi web progresif (PWA) — dapat dipasang di perangkat apa pun, berfungsi luring, dan menyinkronkan data saat terhubung.
 
-**514 components. 126,000+ lines of TypeScript. One app to run your life.**
-
-<br />
-
-## Why LifeOS?
-
-Most productivity apps solve one problem. LifeOS connects everything:
-
-- Your **goals** break down into tasks that appear on your **schedule**
-- Your **habits** feed XP into your **character** who levels up in a living **realm**
-- Your **finances** track alongside your **health** so you see the full picture
-- Your **AI companion** understands all of it and coaches you in context
-- Your **journal** captures reflections that inform your **weekly reviews**
-
-It's not another todo list. It's the system underneath your life.
+**514 komponen. Lebih dari 126.000 baris TypeScript. Satu aplikasi untuk mengelola hidup Anda.**
 
 <br />
 
-## Screenshots
+## Mengapa LifeOS?
+
+Sebagian besar aplikasi produktivitas menyelesaikan satu masalah. LifeOS menghubungkan semuanya:
+
+- **Tujuan** diuraikan menjadi tugas yang muncul di **jadwal**
+- **Kebiasaan** menghasilkan XP untuk **karakter** yang naik level di **dunia** yang terus berkembang
+- **Keuangan** dipantau bersama **kesehatan** agar Anda melihat gambaran utuh
+- **Pendamping AI** memahami semuanya dan memberi arahan sesuai konteks
+- **Jurnal** mencatat refleksi yang menjadi bahan **tinjauan mingguan**
+
+Ini bukan sekadar daftar tugas. Ini adalah sistem yang menopang kehidupan Anda.
+
+<br />
+
+## Tangkapan Layar
 
 <p align="center">
   <img src=".github/screenshots/mobile-dashboard.jpg" alt="Dashboard" width="300" />
@@ -54,100 +54,100 @@ It's not another todo list. It's the system underneath your life.
 
 <br />
 
-## Features
+## Fitur
 
-### **Command Center**
-A dashboard that actually matters. Morning briefs, today's schedule, habit streaks, financial snapshot, goal progress — all in one glance. Fully customisable layout.
+### **Pusat Kendali**
+Dasbor yang benar-benar berguna. Ringkasan pagi, jadwal hari ini, rangkaian kebiasaan, ikhtisar keuangan, dan progres tujuan — semuanya terlihat sekilas. Tata letak dapat disesuaikan sepenuhnya.
 
-### **Goal Engine**
-Hierarchical goal system: Objectives → Epics → Goals → Tasks. AI-powered decomposition breaks ambitious plans into scheduled, actionable steps spread across realistic timelines.
+### **Mesin Tujuan**
+Sistem tujuan bertingkat: Sasaran → Epik → Tujuan → Tugas. AI menguraikan rencana besar menjadi langkah-langkah terjadwal dan dapat dilakukan dalam rentang waktu yang realistis.
 
-### **Smart Schedule**
-Calendar meets task manager. Events, tasks, and habits on one timeline. Drag to reschedule. Conflict detection. Deep-link notifications that highlight exactly what needs attention.
+### **Jadwal Cerdas**
+Perpaduan kalender dan pengelola tugas. Acara, tugas, dan kebiasaan dalam satu linimasa. Seret untuk menjadwalkan ulang, deteksi konflik, serta notifikasi tautan langsung yang menunjukkan hal yang perlu diperhatikan.
 
-### **Habit Tracking**
-Streak-based habits with XP rewards. Habit garden where plants grow with consistency and wilt when you break the chain. Custom frequencies, reminders, and analytics.
+### **Pelacakan Kebiasaan**
+Kebiasaan dengan rangkaian konsistensi dan hadiah XP. Taman kebiasaan tempat tanaman tumbuh saat Anda konsisten dan layu saat rangkaian terputus. Frekuensi, pengingat, dan analitik dapat disesuaikan.
 
-### **Finance Dashboard**
-Income, expenses, budgets, and net worth tracking. Visual breakdowns by category. Business and personal separation. CSV import for bank statements.
+### **Dasbor Keuangan**
+Pantau pemasukan, pengeluaran, anggaran, dan kekayaan bersih. Rincian visual berdasarkan kategori, pemisahan keuangan bisnis dan pribadi, serta impor CSV untuk rekening koran.
 
-### **Health & Wellness**
-Mood, energy, sleep, stress, and exercise logging. Guided check-ins. Correlations between your health metrics and productivity patterns.
+### **Kesehatan dan Kebugaran**
+Catat suasana hati, energi, tidur, stres, dan olahraga. Pemeriksaan terpandu serta hubungan antara metrik kesehatan dan pola produktivitas Anda.
 
-### **The Realm** *(RPG Engine)*
-Your real life rendered as a fantasy world. Character with class, equipment, and stats derived from your actual habits and achievements. NPC companions, quest board, procedural music, dynamic weather that reflects your emotional state.
+### **Dunia LifeOS** *(Mesin RPG)*
+Kehidupan nyata Anda ditampilkan sebagai dunia fantasi. Kelas, perlengkapan, dan statistik karakter berasal dari kebiasaan serta pencapaian nyata. Dilengkapi pendamping NPC, papan misi, musik prosedural, dan cuaca dinamis yang mencerminkan keadaan emosi Anda.
 
-### **Junction** *(Spiritual Practice)*
-Multi-tradition spiritual companion. Daily practices, wisdom traditions, sacred texts, and guided reflections from Christianity, Islam, Buddhism, Hinduism, Sikhism, Tewahedo, and more.
+### **Junction** *(Praktik Spiritual)*
+Pendamping spiritual lintas tradisi. Praktik harian, tradisi kebijaksanaan, teks suci, dan refleksi terpandu dari Kristen, Islam, Buddha, Hindu, Sikh, Tewahedo, dan tradisi lainnya.
 
-### **AI Companion**
-Context-aware AI chat that knows your goals, schedule, habits, and history. Plan objectives, get coaching, decompose projects, generate meal plans, optimise your week — all from natural conversation.
+### **Pendamping AI**
+Obrolan AI yang memahami tujuan, jadwal, kebiasaan, dan riwayat Anda. Rencanakan sasaran, dapatkan arahan, uraikan proyek, buat rencana makan, dan optimalkan pekan Anda melalui percakapan alami.
 
-### **Journal & Reviews**
-Daily journal with mood tagging. Weekly reviews that surface patterns, celebrate wins, and recalibrate priorities. Guided reflection prompts.
+### **Jurnal dan Tinjauan**
+Jurnal harian dengan penanda suasana hati. Tinjauan mingguan untuk menemukan pola, merayakan pencapaian, dan menyusun ulang prioritas. Dilengkapi panduan refleksi.
 
-### **Social & Multiplayer**
-Guilds, partnerships, community leaderboards, and shared challenges. Accountability through friendly competition.
+### **Sosial dan Multipemain**
+Guild, kemitraan, papan peringkat komunitas, dan tantangan bersama. Saling menjaga komitmen melalui kompetisi yang sehat.
 
-### **Works Everywhere**
-Progressive Web App — install on iOS, Android, Mac, Windows, Linux. Offline-first with IndexedDB. Background sync when connected. No app store needed.
+### **Dapat Digunakan di Mana Saja**
+Aplikasi Web Progresif — pasang di iOS, Android, Mac, Windows, atau Linux. Mengutamakan mode luring dengan IndexedDB dan menyinkronkan data di latar belakang saat terhubung. Tidak perlu toko aplikasi.
 
 <br />
 
-## Tech Stack
+## Teknologi
 
 | Layer | Technology |
 |-------|-----------|
-| Frontend | React 19 + TypeScript + Vite |
-| Styling | CSS (no framework — full custom) |
-| State | Zustand (9 stores) |
+| Antarmuka | React 19 + TypeScript + Vite |
+| Gaya | CSS (tanpa framework — dibuat khusus) |
+| Status aplikasi | Zustand (9 store) |
 | Backend | Supabase (Postgres + Auth + RLS) |
-| Offline | IndexedDB with tiered sync engine |
-| AI | OpenRouter (multi-model, server-proxied) |
-| Deploy | Static build → any CDN or server |
-| Auth | Supabase Auth (Google OAuth + email) |
+| Luring | IndexedDB dengan mesin sinkronisasi bertingkat |
+| AI | OpenRouter (multi-model, melalui proksi server) |
+| Deploy | Hasil build statis → CDN atau server apa pun |
+| Autentikasi | Supabase Auth (Google OAuth + email) |
 
 <br />
 
-## Quick Start
+## Mulai Cepat
 
-### Use the hosted version (recommended)
+### Gunakan versi yang di-host (disarankan)
 
 **[app.runlifeos.com](https://app.runlifeos.com)** — free, always up to date, no setup required.
 
-Works on any device with a browser. Install as a PWA for the native app experience.
+Berfungsi di perangkat apa pun yang memiliki peramban. Pasang sebagai PWA untuk pengalaman seperti aplikasi native.
 
 <br />
 
-### Self-Hosting
+### Menjalankan Sendiri
 
-Want to run your own instance? LifeOS is fully open source.
+Ingin menjalankan instans sendiri? LifeOS sepenuhnya bersifat sumber terbuka.
 
-#### Prerequisites
+#### Prasyarat
 
 - Node.js 18+
 - A [Supabase](https://supabase.com) project (free tier works)
 - An [OpenRouter](https://openrouter.ai) API key (for AI features)
 
-#### Setup
+#### Penyiapan
 
 ```bash
-# Clone the repo
+# Klon repositori
 git clone https://github.com/lifeos-app/lifeos.git
 cd lifeos
 
-# Install dependencies
+# Pasang dependensi
 npm install
 
-# Configure environment
+# Konfigurasikan lingkungan
 cp .env.example .env
-# Edit .env with your Supabase URL, anon key, and API base URL
+# Isi .env dengan URL Supabase, kunci anon, dan URL dasar API
 
-# Start development server
+# Jalankan server pengembangan
 npm run dev
 ```
 
-#### Environment Variables
+#### Variabel Lingkungan
 
 ```env
 VITE_SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
@@ -155,22 +155,22 @@ VITE_SUPABASE_ANON_KEY=your_anon_key
 VITE_API_BASE_URL=https://your-server.com    # LLM proxy endpoint
 ```
 
-#### Database Setup
+#### Penyiapan Basis Data
 
-The app uses Supabase with Row Level Security. Migration files are in `supabase/migrations/`. You'll need to set up the base schema in your Supabase project — see the [Supabase docs](https://supabase.com/docs) for getting started.
+Aplikasi menggunakan Supabase dengan Row Level Security. Berkas migrasi tersedia di `supabase/migrations/`. Siapkan skema dasar di proyek Supabase Anda — lihat [dokumentasi Supabase](https://supabase.com/docs) untuk memulai.
 
-> **Note:** The migration files handle incremental changes. If you need help setting up the complete schema, [open an issue](https://github.com/lifeos-app/lifeos/issues) or check the discussions — the community can help.
+> **Catatan:** Berkas migrasi menangani perubahan bertahap. Jika membutuhkan bantuan untuk menyiapkan skema lengkap, [buat issue](https://github.com/lifeos-app/lifeos/issues) atau kunjungi diskusi komunitas.
 
-#### Production Build
+#### Build Produksi
 
 ```bash
 npm run build
-# Deploy the `dist/` folder to any static host
+# Deploy folder `dist/` ke layanan hosting statis apa pun
 ```
 
 <br />
 
-## Project Structure
+## Struktur Proyek
 
 ```
 src/
@@ -189,27 +189,27 @@ public/
 
 <br />
 
-## Contributing
+## Kontribusi
 
-LifeOS is built by a small team and contributions are welcome.
+LifeOS dikembangkan oleh tim kecil dan menerima kontribusi dari siapa pun.
 
-### Good first contributions
-- **Schema documentation** — Help document the full database schema for self-hosters
-- **Bug fixes** — Check [open issues](https://github.com/lifeos-app/lifeos/issues)
-- **New integrations** — Plugin system supports custom data sources
-- **Translations** — Help make LifeOS accessible in more languages
-- **Mobile UX** — PWA refinements for iOS/Android edge cases
+### Kontribusi yang cocok untuk pemula
+- **Dokumentasi skema** — Bantu mendokumentasikan skema basis data lengkap untuk pengguna yang menjalankan sendiri
+- **Perbaikan bug** — Lihat [issue terbuka](https://github.com/lifeos-app/lifeos/issues)
+- **Integrasi baru** — Sistem plugin mendukung sumber data khusus
+- **Terjemahan** — Bantu membuat LifeOS dapat digunakan dalam lebih banyak bahasa
+- **UX seluler** — Penyempurnaan PWA untuk berbagai kondisi di iOS/Android
 
-### How to contribute
+### Cara berkontribusi
 
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Make your changes
-4. Submit a PR with a clear description
+1. Fork repositori
+2. Buat branch fitur (`git checkout -b feature/your-feature`)
+3. Buat perubahan
+4. Ajukan PR dengan deskripsi yang jelas
 
 <br />
 
-## Roadmap
+## Peta Jalan
 
 - [ ] Desktop app (Tauri)
 - [ ] Telegram bot integration
@@ -220,16 +220,16 @@ LifeOS is built by a small team and contributions are welcome.
 
 <br />
 
-## License
+## Lisensi
 
-MIT — use it, fork it, build on it.
+MIT — gunakan, fork, dan kembangkan.
 
 <br />
 
 ---
 
 <p align="center">
-  <strong>Built in Melbourne, Australia — with <a href="https://claude.ai/code">Claude Code</a></strong>
+  <strong>Dibuat di Melbourne, Australia — bersama <a href="https://claude.ai/code">Claude Code</a></strong>
   <br />
-  <a href="https://teddyscleaning.com.au">Teddy's Cleaning Systems</a> · <a href="https://app.runlifeos.com">Try LifeOS</a>
+  <a href="https://teddyscleaning.com.au">Teddy's Cleaning Systems</a> · <a href="https://app.runlifeos.com">Coba LifeOS</a>
 </p>

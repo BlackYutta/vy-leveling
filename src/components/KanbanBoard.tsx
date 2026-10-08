@@ -52,7 +52,7 @@ function formatDueDate(dateStr: string): string {
   if (diffDays < 0) return 'Overdue';
   if (diffDays === 0) return 'Today';
   if (diffDays === 1) return 'Tomorrow';
-  return d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+  return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
 }
 
 function isDueOverdue(dateStr: string): boolean {

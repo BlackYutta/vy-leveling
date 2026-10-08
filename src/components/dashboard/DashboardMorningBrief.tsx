@@ -36,7 +36,7 @@ interface CachedBrief {
 
 // ── CACHE HELPERS ──────────────────────────────────────────────────────────────
 
-const CACHE_KEY_PREFIX = 'lifeos-morning-brief-';
+const CACHE_KEY_PREFIX = 'lifeos-morning-brief-id-v2-';
 const XP_CACHE_KEY = 'lifeos-morning-brief-xp-';
 
 function getCachedBrief(userId: string, date: string): CachedBrief | null {
@@ -81,46 +81,46 @@ function markXPAwarded(userId: string, date: string) {
 function buildBriefPrompt(brief: LLMMorningBrief, firstName: string): string {
   const scheduleSummary = brief.todaySchedule.length > 0
     ? brief.todaySchedule.map(e => `  - ${e.time}: ${e.title}${e.location ? ` @ ${e.location}` : ''}`).join('\n')
-    : '  No events scheduled';
+    : '  Tidak ada acara terjadwal';
 
   const questsSummary = brief.activeQuests.length > 0
     ? brief.activeQuests.map(q => `  - [${q.priority}] ${q.icon} ${q.title} (+${q.reward_xp} XP)`).join('\n')
-    : '  No active quests';
+    : '  Tidak ada misi aktif';
 
   const finSummary = brief.financeSummary
-    ? `This week: $${brief.financeSummary.income.toFixed(0)} income, $${brief.financeSummary.expenses.toFixed(0)} expenses (net: $${brief.financeSummary.net.toFixed(0)})`
-    : 'No financial data this week';
+    ? `Pekan ini: pemasukan $${brief.financeSummary.income.toFixed(0)}, pengeluaran $${brief.financeSummary.expenses.toFixed(0)} (neto: $${brief.financeSummary.net.toFixed(0)})`
+    : 'Tidak ada data keuangan pekan ini';
 
   const partnerInfo = brief.partnerUpdates.length > 0
     ? brief.partnerUpdates.join('; ')
-    : 'No partner updates';
+    : 'Tidak ada kabar dari rekan';
 
-  return `You are the LifeOS AI assistant. Generate a brief, personalized morning brief for ${firstName}.
+  return `Anda adalah asisten AI LifeOS. Buat ringkasan pagi yang singkat dan personal untuk ${firstName}. Tulis seluruh ringkasan dalam Bahasa Indonesia.
 
-TODAY'S DATA:
-- Date: ${brief.date}
-- Schedule (${brief.stats.upcomingEvents} events):
+DATA HARI INI:
+- Tanggal: ${brief.date}
+- Jadwal (${brief.stats.upcomingEvents} acara):
 ${scheduleSummary}
-- Active quests (${brief.activeQuests.length}):
+- Misi aktif (${brief.activeQuests.length}):
 ${questsSummary}
-- Habits: ${brief.stats.habitsNotLogged} habits not yet logged today
-- Best streak: ${brief.streakStatus.days} days (${brief.streakStatus.label})
-- XP earned today: ${brief.xpToday}
-- Finance: ${finSummary}
-- Partners: ${partnerInfo}
-- Suggested focus: ${brief.suggestedFocus}
+- Kebiasaan: ${brief.stats.habitsNotLogged} kebiasaan belum dicatat hari ini
+- Rangkaian terbaik: ${brief.streakStatus.days} hari (${brief.streakStatus.label})
+- XP yang diperoleh hari ini: ${brief.xpToday}
+- Keuangan: ${finSummary}
+- Rekan: ${partnerInfo}
+- Fokus yang disarankan: ${brief.suggestedFocus}
 
-RULES:
-- Write 3-5 SHORT sentences max. Be conversational, warm, and motivating.
-- Start with a brief greeting/observation about their day ahead.
-- Mention the most important 1-2 things: key event, habit streak, or quest.
-- End with one punchy motivational line.
-- Don't list everything — highlight what matters most.
-- Be specific to their data, not generic.
-- Don't use emojis excessively — max 2-3.
-- Don't mention "LifeOS" or sound like an AI assistant.
-- Sound like a sharp, supportive friend who knows their goals.
-- If the user has no events, quests, or habits, don't mention them. Focus on suggesting what they could do to get started with their day.`;
+ATURAN:
+- Tulis maksimal 3–5 kalimat SINGKAT. Gunakan gaya percakapan yang hangat dan memotivasi.
+- Awali dengan sapaan atau pengamatan singkat tentang hari pengguna.
+- Sebutkan 1–2 hal terpenting: acara utama, rangkaian kebiasaan, atau misi.
+- Akhiri dengan satu kalimat motivasi yang kuat.
+- Jangan daftarkan semuanya; soroti hal yang paling penting.
+- Gunakan data pengguna secara spesifik, bukan kalimat umum.
+- Jangan berlebihan memakai emoji; maksimal 2–3.
+- Jangan menyebut "LifeOS" atau terdengar seperti asisten AI.
+- Bicaralah seperti teman yang cerdas, suportif, dan memahami tujuan pengguna.
+- Jika tidak ada acara, misi, atau kebiasaan, jangan menyebutkannya. Sarankan cara sederhana untuk memulai hari.`;
 }
 
 // ── TIME-BASED ICON ────────────────────────────────────────────────────────────
@@ -159,7 +159,7 @@ export function DashboardMorningBrief() {
     markXPAwarded(user.id, today);
     try {
       await awardXP(supabase, user.id, 'page_visit', {
-        description: 'Morning brief check-in',
+        description: 'Pemeriksaan ringkasan pagi',
       });
     } catch {
       // Non-critical — don't break the brief
@@ -203,7 +203,7 @@ export function DashboardMorningBrief() {
         && data.xpToday === 0;
 
       if (isEmpty) {
-        const summary = `Hey ${firstName || 'there'}! Welcome — your dashboard is a blank canvas right now. Start by setting a goal or adding a habit, and this brief will light up with your day ahead.`;
+        const summary = `Hai ${firstName || ''}! Selamat datang — dasbor Anda masih kosong. Mulailah dengan menetapkan tujuan atau menambahkan kebiasaan, lalu ringkasan ini akan membantu memandu hari Anda.`;
         setAiSummary(summary);
         setCachedBrief(user.id, today, data, summary);
         awardCheckinXP();
@@ -215,7 +215,7 @@ export function DashboardMorningBrief() {
       try {
         const zcOnline = await agentHealthCheck();
         if (zcOnline) {
-          const prompt = buildBriefPrompt(data, firstName || 'there');
+          const prompt = buildBriefPrompt(data, firstName || 'teman');
           const zcRes = await agentChat({
             userId: user.id,
             message: prompt,
@@ -238,10 +238,10 @@ export function DashboardMorningBrief() {
       } catch {
         // ZeroClaw unavailable — fall back to LLM proxy
         try {
-          const prompt = buildBriefPrompt(data, firstName || 'there');
+          const prompt = buildBriefPrompt(data, firstName || 'teman');
           summary = await callLLMSimple(prompt, { timeoutMs: 15000 });
         } catch {
-          summary = buildFallbackSummary(data, firstName || 'there');
+          summary = buildFallbackSummary(data, firstName || 'teman');
         }
       }
 
@@ -250,7 +250,7 @@ export function DashboardMorningBrief() {
       awardCheckinXP();
     } catch (err) {
       logger.error('[MorningBrief] Generation failed:', err);
-      setError('Could not load your morning brief');
+      setError('Tidak dapat memuat ringkasan harian');
       // Try to show cached version even if stale
       const cached = getCachedBrief(user.id, today);
       if (cached) {
@@ -409,7 +409,7 @@ export function DashboardMorningBrief() {
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#E8F0FE' }}>
-                Your Daily Brief
+                Ringkasan Harian Anda
               </h2>
               <Sparkles size={14} style={{ color: '#7C5CFC', opacity: 0.8 }} />
             </div>
@@ -431,7 +431,7 @@ export function DashboardMorningBrief() {
           <button
             onClick={(e) => { e.stopPropagation(); generateBrief(true); }}
             disabled={refreshing}
-            title="Refresh brief"
+            title="Perbarui ringkasan"
             style={{
               background: 'rgba(124,92,252,0.1)',
               border: '1px solid rgba(124,92,252,0.2)',
@@ -486,7 +486,7 @@ export function DashboardMorningBrief() {
             {briefData.stats.upcomingEvents > 0 && (
               <BriefPill
                 icon={<Calendar size={11} />}
-                label={`${briefData.stats.upcomingEvents} event${briefData.stats.upcomingEvents !== 1 ? 's' : ''}`}
+                label={`${briefData.stats.upcomingEvents} acara`}
                 color="#A855F7"
                 onClick={() => navigate('/schedule')}
               />
@@ -494,7 +494,7 @@ export function DashboardMorningBrief() {
             {briefData.activeQuests.length > 0 && (
               <BriefPill
                 icon={<CheckSquare size={11} />}
-                label={`${briefData.activeQuests.length} quest${briefData.activeQuests.length !== 1 ? 's' : ''}`}
+                label={`${briefData.activeQuests.length} misi`}
                 color="#00D4FF"
                 onClick={() => navigate('/character?tab=quests')}
               />
@@ -502,7 +502,7 @@ export function DashboardMorningBrief() {
             {briefData.streakStatus.days > 0 && (
               <BriefPill
                 icon={<Flame size={11} />}
-                label={`${briefData.streakStatus.days}d streak`}
+                label={`${briefData.streakStatus.days} hari beruntun`}
                 color="#F97316"
                 onClick={() => navigate('/habits')}
               />
@@ -510,7 +510,7 @@ export function DashboardMorningBrief() {
             {briefData.stats.habitsNotLogged > 0 && (
               <BriefPill
                 icon={<Target size={11} />}
-                label={`${briefData.stats.habitsNotLogged} habit${briefData.stats.habitsNotLogged !== 1 ? 's' : ''} left`}
+                label={`${briefData.stats.habitsNotLogged} kebiasaan tersisa`}
                 color="#EAB308"
                 onClick={() => navigate('/habits')}
               />
@@ -637,26 +637,26 @@ function buildFallbackSummary(brief: LLMMorningBrief, firstName: string): string
     const first = brief.todaySchedule[0];
     parts.push(
       brief.todaySchedule.length === 1
-        ? `You've got "${first.title}" at ${first.time} today.`
-        : `You have ${brief.todaySchedule.length} events today, starting with "${first.title}" at ${first.time}.`
+        ? `Anda memiliki acara "${first.title}" pukul ${first.time} hari ini.`
+        : `Ada ${brief.todaySchedule.length} acara hari ini, dimulai dengan "${first.title}" pukul ${first.time}.`
     );
   } else {
-    parts.push("Your schedule is clear today — perfect time to make progress on your goals.");
+    parts.push('Jadwal Anda kosong hari ini — waktu yang tepat untuk membuat kemajuan menuju tujuan.');
   }
 
   // Streak
   if (brief.streakStatus.days > 0) {
-    parts.push(`Your ${brief.streakStatus.days}-day streak is going strong — keep it alive.`);
+    parts.push(`Rangkaian ${brief.streakStatus.days} hari Anda terus terjaga — pertahankan!`);
   }
 
   // Habits
   if (brief.stats.habitsNotLogged > 0) {
-    parts.push(`${brief.stats.habitsNotLogged} habit${brief.stats.habitsNotLogged !== 1 ? 's' : ''} still to log today.`);
+    parts.push(`Masih ada ${brief.stats.habitsNotLogged} kebiasaan yang perlu dicatat hari ini.`);
   }
 
   // Quests
   if (brief.activeQuests.length > 0) {
-    parts.push(`${brief.activeQuests.length} quest${brief.activeQuests.length !== 1 ? 's' : ''} waiting for you.`);
+    parts.push(`Ada ${brief.activeQuests.length} misi yang menanti Anda.`);
   }
 
   // Finance
@@ -666,12 +666,12 @@ function buildFallbackSummary(brief: LLMMorningBrief, firstName: string): string
 
   // XP
   if (brief.xpToday > 0) {
-    parts.push(`You've earned ${brief.xpToday} XP so far today.`);
+    parts.push(`Anda telah memperoleh ${brief.xpToday} XP hari ini.`);
   }
 
   // Focus
   if (brief.suggestedFocus) {
-    parts.push(`Suggested focus: ${brief.suggestedFocus}.`);
+    parts.push(`Fokus yang disarankan: ${brief.suggestedFocus}.`);
   } else {
     parts.push(brief.motivationalNote);
   }

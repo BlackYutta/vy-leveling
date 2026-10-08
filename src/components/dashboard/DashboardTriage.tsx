@@ -34,7 +34,7 @@ export function DashboardTriage() {
 
   if (loading || triageCount === 0) return null;
 
-  const yesterdayLabel = new Date(yesterday + 'T00:00:00').toLocaleDateString('en-AU', {
+  const yesterdayLabel = new Date(yesterday + 'T00:00:00').toLocaleDateString('id-ID', {
     weekday: 'long', month: 'short', day: 'numeric',
   });
 

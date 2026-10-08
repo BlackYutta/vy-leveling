@@ -12,21 +12,21 @@ const MiniCharacter = lazy(() => import('../realm/ui/MiniCharacter').then(m => (
 import './DesktopHeader.css';
 
 const ROUTE_TITLES: Record<string, string> = {
-  '/': 'Today',
-  '/schedule': 'Schedule',
-  '/goals': 'Goals',
-  '/habits': 'Habits',
-  '/finances': 'Finances',
-  '/health': 'Health',
-  '/reflect': 'Reflect',
-  '/reflect/journal': 'Journal',
-  '/reflect/review': 'Review',
-  '/reflect/inbox': 'Inbox',
-  '/reflect/story': 'Story',
-  '/social': 'Social',
-  '/settings': 'Settings',
-  '/character': 'Character',
-  '/character/equipment': 'Equipment',
+  '/': 'Hari Ini',
+  '/schedule': 'Jadwal',
+  '/goals': 'Tujuan',
+  '/habits': 'Kebiasaan',
+  '/finances': 'Keuangan',
+  '/health': 'Kesehatan',
+  '/reflect': 'Refleksi',
+  '/reflect/journal': 'Jurnal',
+  '/reflect/review': 'Tinjauan',
+  '/reflect/inbox': 'Kotak Masuk',
+  '/reflect/story': 'Cerita',
+  '/social': 'Sosial',
+  '/settings': 'Pengaturan',
+  '/character': 'Karakter',
+  '/character/equipment': 'Perlengkapan',
   '/character/junction': 'Junction',
 };
 
@@ -73,18 +73,18 @@ export function DesktopHeader() {
           )}
 
           {/* Notifications bell */}
-          <button className="dh-notif-btn" onClick={() => setNotifOpen(prev => !prev)} aria-label="Notifications">
+          <button className="dh-notif-btn" onClick={() => setNotifOpen(prev => !prev)} aria-label="Notifikasi">
             <Bell size={16} />
             {unreadCount > 0 && <span className="dh-notif-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>}
           </button>
 
           {/* Messages */}
-          <button className="dh-messages-btn" onClick={() => navigate('/social?tab=messages')} aria-label="Messages" title="Messages">
+          <button className="dh-messages-btn" onClick={() => navigate('/social?tab=messages')} aria-label="Pesan" title="Pesan">
             <MessageCircle size={16} />
           </button>
 
           {/* Character page */}
-          <button className="dh-character-btn" onClick={() => navigate('/character')} aria-label="Character" title="Character">
+          <button className="dh-character-btn" onClick={() => navigate('/character')} aria-label="Karakter" title="Karakter">
             <Swords size={16} />
           </button>
 

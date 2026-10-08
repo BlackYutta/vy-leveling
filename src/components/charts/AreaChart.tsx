@@ -275,7 +275,7 @@ export function AreaChart({
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: s.color, display: 'inline-block', flexShrink: 0 }} />
               <span style={{ color: 'rgba(255,255,255,0.6)' }}>{s.label}:</span>
               <span style={{ color: s.color, fontWeight: 700, fontFamily: 'var(--font-display)' }}>
-                ${(s.data[activeIdx] ?? 0).toLocaleString('en-AU', { maximumFractionDigits: 0 })}
+                ${(s.data[activeIdx] ?? 0).toLocaleString('id-ID', { maximumFractionDigits: 0 })}
               </span>
             </div>
           ))}

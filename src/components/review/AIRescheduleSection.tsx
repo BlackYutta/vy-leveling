@@ -26,7 +26,7 @@ const PRIORITY_COLORS: Record<string, string> = {
 
 function formatSuggestedDate(dateStr: string): string {
   const date = new Date(dateStr + 'T00:00:00');
-  return date.toLocaleDateString('en-AU', { weekday: 'short', month: 'short', day: 'numeric' });
+  return date.toLocaleDateString('id-ID', { weekday: 'short', month: 'short', day: 'numeric' });
 }
 
 export function AIRescheduleSection() {

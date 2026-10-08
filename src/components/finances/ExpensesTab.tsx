@@ -213,7 +213,7 @@ export const ExpensesTab = React.memo(function ExpensesTab() {
               <div key={date} className="fin-tx-date-group">
                 <div className="fin-tx-date-header">
                   <Calendar size={12} />
-                  {new Date(date + 'T00:00:00').toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                  {new Date(date + 'T00:00:00').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
                   <span className="fin-tx-date-total expense">-{fmtCurrency(items.reduce((s, i) => s + i.amount, 0))}</span>
                 </div>
                 {items.map(e => {

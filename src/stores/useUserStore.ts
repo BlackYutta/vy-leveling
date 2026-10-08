@@ -229,9 +229,9 @@ export const useUserStore = create<UserState>((set, get) => ({
   },
 
   initAuth: () => {
-    // ── Tauri / Electron mode: skip network auth, use local user immediately ──
+    // ── Local API / Tauri / Electron: skip cloud auth and use the single local user ──
     const detectedEnv = getEnvironment();
-    if (detectedEnv === 'tauri' || detectedEnv === 'electron') {
+    if (detectedEnv === 'local-api' || detectedEnv === 'tauri' || detectedEnv === 'electron') {
       set({
         user: { id: 'local-user-001', email: 'local@lifeos.app', email_confirmed_at: new Date().toISOString(), user_metadata: { full_name: 'LifeOS User' } } as any,
         mode: 'local',
@@ -239,8 +239,8 @@ export const useUserStore = create<UserState>((set, get) => ({
         connectionError: false,
         profileLoading: true,
       });
-      // Fetch profile from SQLite via IPC (NOT IndexedDB local-db.ts)
-      // Use SELECT * — local schema has full_name instead of display_name, no occupation/primary_focus
+      // Fetch the profile from the active local adapter (Flask/SQLite or desktop IPC).
+      // Use SELECT * because the local schema may not have every cloud profile column.
       supabase.from('user_profiles')
         .select('*')
         .eq('user_id', 'local-user-001')

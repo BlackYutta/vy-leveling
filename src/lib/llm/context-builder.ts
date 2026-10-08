@@ -125,7 +125,7 @@ async function loadCrossCuttingContext(
 
     if (activity && activity.length > 0) {
       const lines = activity.map((a: { title: string; created_at: string; xp_earned: number }) =>
-        `• ${a.title} (${new Date(a.created_at).toLocaleDateString('en-AU')})`
+        `• ${a.title} (${new Date(a.created_at).toLocaleDateString('id-ID')})`
       );
       sections.push({ label: 'Recent Plugin Activity', data: lines.join('\n') });
     }
@@ -301,7 +301,7 @@ async function loadHealthContext(
     if (l.water_glasses) parts.push(`water: ${l.water_glasses} glasses`);
     if (l.weight_kg) parts.push(`weight: ${l.weight_kg}kg`);
     if (l.notes) parts.push(l.notes);
-    return `• ${new Date(l.date).toLocaleDateString('en-AU')}: ${parts.join(', ') || 'no data'}`;
+    return `• ${new Date(l.date).toLocaleDateString('id-ID')}: ${parts.join(', ') || 'no data'}`;
   }
   );
 
@@ -328,7 +328,7 @@ async function loadScheduleContext(
   if (!events?.length) return [{ label: 'Schedule', data: 'No events in the next 7 days.' }];
 
   const lines = events.map((e: { title: string; start_time: string; location?: string }) =>
-    `• ${new Date(e.start_time).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' })} ${new Date(e.start_time).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true })} — ${e.title}${e.location ? ` @ ${e.location}` : ''}`
+    `• ${new Date(e.start_time).toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' })} ${new Date(e.start_time).toLocaleTimeString('en-AU', { hour: 'numeric', minute: '2-digit', hour12: true })} — ${e.title}${e.location ? ` @ ${e.location}` : ''}`
   );
 
   return [{ label: 'Upcoming Schedule (7 days)', data: lines.join('\n') }];
@@ -369,7 +369,7 @@ async function loadWorkContext(
   if (!activity?.length) return [{ label: 'TCS Activity', data: 'No TCS events logged yet.' }];
 
   const lines = activity.map((a: { title: string; description: string | null; created_at: string; xp_earned: number }) =>
-    `• ${a.title}${a.description ? ` — ${a.description}` : ''} (${new Date(a.created_at).toLocaleDateString('en-AU')})`
+    `• ${a.title}${a.description ? ` — ${a.description}` : ''} (${new Date(a.created_at).toLocaleDateString('id-ID')})`
   );
 
   return [{ label: 'Recent TCS Activity', data: lines.join('\n') }];
@@ -389,7 +389,7 @@ async function loadJournalContext(
   if (!entries?.length) return [{ label: 'Journal', data: 'No journal entries yet.' }];
 
   const lines = entries.map((e: { title?: string; created_at: string; mood?: string }) =>
-    `• ${new Date(e.created_at).toLocaleDateString('en-AU')}${e.title ? ` — ${e.title}` : ''}${e.mood ? ` (${e.mood})` : ''}`
+    `• ${new Date(e.created_at).toLocaleDateString('id-ID')}${e.title ? ` — ${e.title}` : ''}${e.mood ? ` (${e.mood})` : ''}`
   );
 
   return [{ label: 'Recent Journal Entries', data: lines.join('\n') }];

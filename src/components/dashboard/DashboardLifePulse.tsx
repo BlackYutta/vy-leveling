@@ -14,11 +14,11 @@ const today = () => new Date().toISOString().split('T')[0];
 const pulseKey = () => `life_pulse_today_${today()}`;
 
 const MOOD_ICONS = [
-  { icon: Frown, label: 'Awful', value: 1, color: '#F43F5E' },
-  { icon: Frown, label: 'Bad', value: 2, color: '#F97316' },
-  { icon: Meh, label: 'Okay', value: 3, color: '#EAB308' },
-  { icon: Smile, label: 'Good', value: 4, color: '#39FF14' },
-  { icon: Smile, label: 'Great', value: 5, color: '#00D4FF' },
+  { icon: Frown, label: 'Sangat buruk', value: 1, color: '#F43F5E' },
+  { icon: Frown, label: 'Buruk', value: 2, color: '#F97316' },
+  { icon: Meh, label: 'Biasa saja', value: 3, color: '#EAB308' },
+  { icon: Smile, label: 'Baik', value: 4, color: '#39FF14' },
+  { icon: Smile, label: 'Sangat baik', value: 5, color: '#00D4FF' },
 ];
 
 const ENERGY_LEVELS = [
@@ -75,7 +75,7 @@ export function DashboardLifePulse() {
       xpRef.current = true;
     }
     setUIState(pulseKey());
-    showToast('Logged!', '✓', '#39FF14');
+    showToast('Tersimpan!', '✓', '#39FF14');
   }, [upsertToday, awardXP]);
 
   const handleMood = useCallback((val: number) => {
@@ -109,8 +109,8 @@ export function DashboardLifePulse() {
         }}
       >
         <span>✓</span>
-        <span>Pulse logged</span>
-        {streak > 1 && <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-muted)' }}>🔥 {streak} day streak</span>}
+        <span>Catatan hari ini tersimpan</span>
+            {streak > 1 && <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-muted)' }}>🔥 {streak} hari beruntun</span>}
       </button>
     );
   }
@@ -118,13 +118,13 @@ export function DashboardLifePulse() {
   return (
     <div className="glass-card" style={{ padding: 16, marginBottom: 8 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-        <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Life Pulse</span>
-        {streak > 1 && <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>🔥 {streak} day streak</span>}
+        <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>Denyut Kehidupan</span>
+        {streak > 1 && <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>🔥 {streak} hari beruntun</span>}
       </div>
 
       {/* Mood */}
       <div style={{ marginBottom: 12 }}>
-        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Mood</div>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Suasana Hati</div>
         <div style={{ display: 'flex', gap: 6 }}>
           {MOOD_ICONS.map(m => {
             const Icon = m.icon;
@@ -154,7 +154,7 @@ export function DashboardLifePulse() {
 
       {/* Energy */}
       <div style={{ marginBottom: 12 }}>
-        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Energy</div>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Energi</div>
         <div style={{ display: 'flex', gap: 6 }}>
           {ENERGY_LEVELS.map(e => {
             const active = energy === e.value;
@@ -184,7 +184,7 @@ export function DashboardLifePulse() {
 
       {/* Water */}
       <div>
-        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Water</div>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 }}>Air</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <button
             onClick={() => handleWater(-1)}

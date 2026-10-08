@@ -234,13 +234,13 @@ export function FuturePlanningPanel() {
                         {goal.targetDate && (
                           <span className="fpp-goal-target">
                             <Calendar size={10} />
-                            Target: {new Date(goal.targetDate + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric', year: 'numeric' })}
+                            Target: {new Date(goal.targetDate + 'T00:00:00').toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })}
                           </span>
                         )}
                         {goal.projectedCompletion && (
                           <span className="fpp-goal-projected">
                             <Clock size={10} />
-                            Est: {new Date(goal.projectedCompletion + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                            Est: {new Date(goal.projectedCompletion + 'T00:00:00').toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
                           </span>
                         )}
                         <span className="fpp-goal-velocity">
@@ -270,12 +270,12 @@ export function FuturePlanningPanel() {
                         <div className="fpp-milestone-date">
                           {milestone.achieved && milestone.currentDate && (
                             <span className="fpp-milestone-achieved">
-                              ✓ {new Date(milestone.currentDate + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                              ✓ {new Date(milestone.currentDate + 'T00:00:00').toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
                             </span>
                           )}
                           {!milestone.achieved && milestone.projectedDate && (
                             <span className="fpp-milestone-projected">
-                              → {new Date(milestone.projectedDate + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                              → {new Date(milestone.projectedDate + 'T00:00:00').toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
                             </span>
                           )}
                         </div>
@@ -324,7 +324,7 @@ export function FuturePlanningPanel() {
                       </div>
                       {task.due_date && (
                         <div className="fpp-task-due">
-                          {new Date(task.due_date + 'T00:00:00').toLocaleDateString('en', { month: 'short', day: 'numeric' })}
+                          {new Date(task.due_date + 'T00:00:00').toLocaleDateString('id-ID', { month: 'short', day: 'numeric' })}
                         </div>
                       )}
                     </div>

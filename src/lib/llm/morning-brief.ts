@@ -66,7 +66,7 @@ import { localDateStr } from '../../utils/date';
 const localDate = localDateStr;
 
 function formatDateFull(d: Date = new Date()): string {
-  return d.toLocaleDateString('en-AU', {
+  return d.toLocaleDateString('id-ID', {
     weekday: 'long',
     day:     'numeric',
     month:   'long',
@@ -76,20 +76,20 @@ function formatDateFull(d: Date = new Date()): string {
 
 function getGreeting(firstName: string): string {
   const h = new Date().getHours();
-  if (h < 5)  return "You're up early! Ready to dominate?";
-  if (h < 8)  return `Morning ${firstName}! Early bird energy.`;
-  if (h < 12) return `Good morning, ${firstName}!`;
-  if (h < 17) return `Good afternoon, ${firstName}!`;
-  if (h < 20) return `Evening, ${firstName}!`;
-  return "Night owl mode";
+  if (h < 5)  return `Anda bangun pagi sekali, ${firstName}! Siap menjalani hari?`;
+  if (h < 8)  return `Selamat pagi, ${firstName}! Semangat pagi Anda luar biasa.`;
+  if (h < 12) return `Selamat pagi, ${firstName}!`;
+  if (h < 17) return `Selamat siang, ${firstName}!`;
+  if (h < 20) return `Selamat sore, ${firstName}!`;
+  return `Selamat malam, ${firstName}!`;
 }
 
 function formatTime(isoString: string): string {
   try {
-    return new Date(isoString).toLocaleTimeString('en-AU', {
+    return new Date(isoString).toLocaleTimeString('id-ID', {
       hour:   'numeric',
       minute: '2-digit',
-      hour12: true,
+      hour12: false,
     });
   } catch {
     return isoString;
@@ -121,7 +121,7 @@ export async function generateMorningBrief(
     .select('display_name')
     .eq('user_id', userId)
     .maybeSingle();
-  const firstName = profileData?.display_name?.split(' ')[0] || 'there';
+  const firstName = profileData?.display_name?.split(' ')[0] || 'teman';
 
   // Run all queries in parallel
   const [
@@ -279,14 +279,14 @@ export async function generateMorningBrief(
       .gte('created_at', `${yesterdayStr}T00:00:00`)
       .lte('created_at', `${yesterdayStr}T23:59:59`);
 
-    const name = p.responder.display_name ?? 'Your partner';
+    const name = p.responder.display_name ?? 'Rekan Anda';
     if ((count ?? 0) > 0) {
-      partnerUpdates.push(`${name} earned XP in ${count} action${count !== 1 ? 's' : ''} yesterday`);
+      partnerUpdates.push(`${name} memperoleh XP dari ${count} aktivitas kemarin`);
     }
   }
 
   // ── Suggested focus ──
-  let suggestedFocus = 'Keep up the momentum — every action compounds.';
+  let suggestedFocus = 'Terus jaga momentum — setiap tindakan membawa kemajuan.';
   const staleGoals = (goalsRes.data ?? []) as {
     id: string; title: string; category: string; progress: number; updated_at: string | null;
   }[];
@@ -298,27 +298,27 @@ export async function generateMorningBrief(
       : 0;
     if (daysSince >= 3) {
       const pct = Math.round((stalest.progress ?? 0) * 100);
-      suggestedFocus = `Your "${stalest.title}" goal hasn't had progress in ${daysSince} days (${pct}% done). One action today keeps momentum.`;
+      suggestedFocus = `Tujuan "${stalest.title}" belum berkembang selama ${daysSince} hari (selesai ${pct}%). Satu tindakan hari ini dapat menjaga momentum.`;
     }
   }
 
   // ── Motivational note ──
   const motivationalNotes = [
-    'Small consistent actions build extraordinary results.',
-    'You\'re building something real. Keep showing up.',
-    'The grind is the glory. Every rep counts.',
-    'Progress isn\'t always visible — trust the process.',
-    'One focused hour beats five distracted ones.',
-    `${maxStreak > 0 ? `Your ${maxStreak}-day streak doesn't break today. ` : ''}Let\'s go.`,
+    'Tindakan kecil yang konsisten menghasilkan perubahan luar biasa.',
+    'Anda sedang membangun sesuatu yang berarti. Teruslah melangkah.',
+    'Perjuangan adalah bagian dari keberhasilan. Setiap usaha berarti.',
+    'Kemajuan tidak selalu terlihat — percayalah pada prosesnya.',
+    'Satu jam penuh fokus lebih baik daripada lima jam terdistraksi.',
+    `${maxStreak > 0 ? `Rangkaian ${maxStreak} hari Anda tetap berlanjut hari ini. ` : ''}Ayo teruskan.`,
   ];
   const motivationalNote = motivationalNotes[now.getDay() % motivationalNotes.length];
 
   // ── Primary action ──
   let primaryAction: LLMMorningBrief['primaryAction'] | undefined;
   if (activeQuests.length > 0) {
-    primaryAction = { label: `Start quest: ${activeQuests[0].title}`, path: '/character?tab=quests' };
+    primaryAction = { label: `Mulai misi: ${activeQuests[0].title}`, path: '/character?tab=quests' };
   } else if (scheduleItems.length > 0) {
-    primaryAction = { label: `View today's schedule`, path: '/schedule' };
+    primaryAction = { label: 'Lihat jadwal hari ini', path: '/schedule' };
   } else if (habitsNotLogged > 0) {
     primaryAction = { label: `Log ${habitsNotLogged} habit${habitsNotLogged !== 1 ? 's' : ''}`, path: '/habits' };
   }
@@ -330,7 +330,7 @@ export async function generateMorningBrief(
     activeQuests,
     streakStatus: {
       days:  maxStreak,
-      label: maxStreak > 0 ? getStreakLabel(maxStreak) : 'No active streak',
+      label: maxStreak > 0 ? getStreakLabel(maxStreak) : 'Belum ada rangkaian',
     },
     partnerUpdates,
     financeSummary,

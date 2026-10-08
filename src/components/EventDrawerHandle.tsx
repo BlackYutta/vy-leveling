@@ -290,7 +290,7 @@ export function EventDrawerHandle({ state, onOpen, drawerMode, onToggleMode, isD
   } else {
     icon = <Target size={14} />;
     label = 'Free';
-    subLabel = drawerMode === 'sacred' ? 'In grace' : 'No events';
+    subLabel = drawerMode === 'sacred' ? 'Dalam keberkahan' : 'Tidak ada acara';
   }
 
   return (
@@ -304,7 +304,7 @@ export function EventDrawerHandle({ state, onOpen, drawerMode, onToggleMode, isD
       onMouseDown={onMouseDown}
       role="button"
       tabIndex={0}
-      aria-label="Open event drawer"
+      aria-label="Buka panel acara"
       title={currentEvent ? `Active: ${currentEvent.title}` : 'Open mission control'}
     >
       {/* ── Chevron pull hint ── */}

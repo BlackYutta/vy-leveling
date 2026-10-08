@@ -67,7 +67,8 @@ def row_to_dict(row):
     # Parse known JSON columns
     for key in ('tags', 'metadata', 'preferences', 'stats', 'equipment',
                 'position', 'sprite_data', 'exercises', 'attachments',
-                'steps_completed', 'custom_fields'):
+                'steps_completed', 'custom_fields', 'paths', 'quest_data',
+                'pattern_data', 'data'):
         if key in d and isinstance(d[key], str):
             try:
                 d[key] = json.loads(d[key])
@@ -711,6 +712,12 @@ CREATE TABLE IF NOT EXISTS asset_documents (
 CREATE TABLE IF NOT EXISTS ai_insights (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
+    insight_type TEXT,
+    title TEXT,
+    summary TEXT,
+    priority TEXT,
+    data TEXT,
+    dismissed_at TEXT,
     type TEXT,
     content TEXT,
     context TEXT DEFAULT '{}',
@@ -738,6 +745,130 @@ CREATE TABLE IF NOT EXISTS unified_events (
     date TEXT,
     metadata TEXT DEFAULT '{}',
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- Local API tables used by app features that also exist in the cloud schema
+CREATE TABLE IF NOT EXISTS messages (
+    id TEXT PRIMARY KEY,
+    sender_id TEXT,
+    receiver_id TEXT,
+    group_id TEXT,
+    content TEXT NOT NULL,
+    message_type TEXT DEFAULT 'text',
+    metadata TEXT DEFAULT '{}',
+    read_at TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS junction_traditions (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    slug TEXT UNIQUE,
+    icon TEXT,
+    description TEXT,
+    color TEXT,
+    background_gradient TEXT,
+    is_active INTEGER DEFAULT 1,
+    paths TEXT DEFAULT '[]',
+    calendar_type TEXT DEFAULT 'gregorian'
+);
+
+CREATE TABLE IF NOT EXISTS junction_figures (
+    id TEXT PRIMARY KEY,
+    tradition_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    title TEXT,
+    bio TEXT,
+    icon TEXT,
+    tier INTEGER DEFAULT 0,
+    xp_required INTEGER DEFAULT 0,
+    feast_day TEXT,
+    sort_order INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS user_junction (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL UNIQUE,
+    tradition_id TEXT NOT NULL,
+    path_id TEXT,
+    junction_xp INTEGER DEFAULT 0,
+    current_figure_id TEXT,
+    is_active INTEGER DEFAULT 1,
+    junctioned_at TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS recurring_transactions (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL DEFAULT 0,
+    category TEXT,
+    frequency TEXT,
+    next_date TEXT,
+    is_active INTEGER DEFAULT 1,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at TEXT DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS habit_suggestions (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    description TEXT,
+    icon TEXT,
+    reason TEXT,
+    source_type TEXT,
+    source_id TEXT,
+    pattern_data TEXT,
+    status TEXT DEFAULT 'pending',
+    accepted_at TEXT,
+    dismissed_at TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS quests (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    quest_type TEXT NOT NULL,
+    quest_data TEXT NOT NULL,
+    progress INTEGER NOT NULL DEFAULT 0,
+    target INTEGER NOT NULL DEFAULT 1,
+    reward_xp INTEGER NOT NULL DEFAULT 0,
+    expires_at TEXT NOT NULL,
+    completed_at TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS grocery_lists (
+    id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    name TEXT NOT NULL DEFAULT 'Shopping List',
+    store TEXT,
+    budget REAL,
+    actual_total REAL,
+    expense_id TEXT,
+    is_active INTEGER DEFAULT 1,
+    completed_at TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    updated_at TEXT DEFAULT (datetime('now')),
+    is_deleted INTEGER DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS grocery_items (
+    id TEXT PRIMARY KEY,
+    list_id TEXT,
+    user_id TEXT NOT NULL,
+    name TEXT NOT NULL,
+    quantity TEXT,
+    category TEXT,
+    estimated_cost REAL,
+    actual_cost REAL,
+    checked INTEGER DEFAULT 0,
+    sort_order INTEGER DEFAULT 0,
+    created_at TEXT NOT NULL DEFAULT (datetime('now')),
+    is_deleted INTEGER DEFAULT 0
 );
 
 -- Sync Meta (tracks last sync times)
@@ -822,6 +953,19 @@ def init_db():
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
     db = sqlite3.connect(DB_PATH)
     db.executescript(SCHEMA_SQL)
+    ai_insight_columns = {
+        row[1] for row in db.execute("PRAGMA table_info(ai_insights)")
+    }
+    for column, definition in (
+        ('insight_type', 'TEXT'),
+        ('title', 'TEXT'),
+        ('summary', 'TEXT'),
+        ('priority', 'TEXT'),
+        ('data', 'TEXT'),
+        ('dismissed_at', 'TEXT'),
+    ):
+        if column not in ai_insight_columns:
+            db.execute(f'ALTER TABLE ai_insights ADD COLUMN "{column}" {definition}')
     # Ensure default user exists
     db.execute(
         "INSERT OR IGNORE INTO users (id, email, display_name) VALUES (?, ?, ?)",
@@ -857,7 +1001,10 @@ ALLOWED_TABLES = {
     'achievements', 'inventory_items', 'pet_profiles', 'categories',
     'projects', 'notes', 'assets', 'asset_maintenance', 'asset_bills',
     'asset_documents', 'ai_insights', 'chat_messages', 'unified_events',
-    'sync_meta', 'lesson_progress', 'parts_inventory',
+    'sync_meta', 'lesson_progress', 'parts_inventory', 'messages',
+    'junction_traditions', 'recurring_transactions', 'habit_suggestions',
+    'junction_figures', 'user_junction', 'quests', 'grocery_lists',
+    'grocery_items',
 }
 
 SOFT_DELETE_TABLES = {
@@ -865,6 +1012,7 @@ SOFT_DELETE_TABLES = {
     'clients', 'journal_entries', 'businesses', 'categories', 'projects',
     'notes', 'assets', 'asset_maintenance', 'asset_bills', 'asset_documents',
     'inventory_items', 'pet_profiles', 'lesson_progress', 'parts_inventory',
+    'grocery_lists', 'grocery_items',
 }
 
 # Tables that use a non-'id' primary key
@@ -875,7 +1023,7 @@ TABLE_PK = {
 }
 
 # Tables that don't have a user_id column
-NO_USER_ID_TABLES = {'sync_meta'}
+NO_USER_ID_TABLES = {'sync_meta', 'junction_traditions', 'junction_figures'}
 
 RESERVED_PARAMS = {'select', 'order', 'limit', 'offset', 'single', 'count',
                     'on_conflict', 'return', 'or'}
@@ -884,6 +1032,10 @@ RESERVED_PARAMS = {'select', 'order', 'limit', 'offset', 'single', 'count',
 def _parse_postgrest_filter(key, raw_value):
     """Parse a PostgREST-style filter: column=operator.value
     Returns (sql_clause, params_list)."""
+    if raw_value.startswith('not.'):
+        clause, params = _parse_postgrest_filter(key, raw_value[4:])
+        return f'NOT ({clause})', params
+
     OP_MAP = {
         'eq': '=', 'neq': '!=', 'gt': '>', 'gte': '>=',
         'lt': '<', 'lte': '<=', 'like': 'LIKE', 'ilike': 'LIKE',
@@ -938,7 +1090,8 @@ def _serialize_json_fields(body):
     """Serialize JSON fields to strings for SQLite storage."""
     for key in ('tags', 'metadata', 'preferences', 'stats', 'equipment',
                 'position', 'sprite_data', 'exercises', 'attachments',
-                'context', 'key_results', 'resources', 'steps_completed', 'custom_fields'):
+                'context', 'key_results', 'resources', 'steps_completed', 'custom_fields',
+                'paths', 'quest_data', 'pattern_data', 'data'):
         if key in body and not isinstance(body[key], str):
             body[key] = json.dumps(body[key])
 
@@ -962,6 +1115,48 @@ def _do_insert(db, table_name, body):
 def _do_upsert(db, table_name, body, on_conflict='id'):
     """Upsert a record (insert or update on conflict)."""
     pk = TABLE_PK.get(table_name, 'id')
+    conflict_columns = [column.strip() for column in on_conflict.split(',') if column.strip()]
+    if len(conflict_columns) > 1:
+        provided_fields = set(body)
+        columns = {row[1] for row in db.execute(f'PRAGMA table_info("{table_name}")')}
+        invalid_columns = set(conflict_columns) - columns
+        if invalid_columns:
+            raise ValueError(f"Unknown conflict column(s) for {table_name}: {', '.join(sorted(invalid_columns))}")
+
+        body.setdefault(pk, new_id())
+        if table_name not in NO_USER_ID_TABLES:
+            body.setdefault('user_id', DEFAULT_USER_ID)
+        body.setdefault('created_at', now_iso())
+        _serialize_json_fields(body)
+
+        where = ' AND '.join(f'"{column}" IS ?' for column in conflict_columns)
+        conflict_values = [body.get(column) for column in conflict_columns]
+        existing = db.execute(
+            f'SELECT "{pk}" FROM {table_name} WHERE {where} LIMIT 1',
+            conflict_values,
+        ).fetchone()
+        if existing:
+            updates = {
+                key: value for key, value in body.items()
+                if key in provided_fields and key not in conflict_columns
+            }
+            if 'updated_at' in columns and 'updated_at' not in provided_fields:
+                updates['updated_at'] = now_iso()
+            _serialize_json_fields(updates)
+            if updates:
+                sets = ', '.join(f'"{key}" = ?' for key in updates)
+                db.execute(
+                    f'UPDATE {table_name} SET {sets} WHERE "{pk}" = ?',
+                    [*updates.values(), existing[0]],
+                )
+            row = db.execute(
+                f'SELECT * FROM {table_name} WHERE "{pk}" = ?',
+                (existing[0],),
+            ).fetchone()
+            return row_to_dict(row)
+
+        return _do_insert(db, table_name, body)
+
     body.setdefault(pk, new_id())
     if table_name not in NO_USER_ID_TABLES:
         body.setdefault('user_id', DEFAULT_USER_ID)

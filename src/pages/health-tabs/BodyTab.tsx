@@ -99,7 +99,7 @@ export function BodyTab({ metrics, allMetrics, markers, onUpdateMetrics, onAddMa
   }] : [];
 
   const weightLabels = weightHistory.map((m: HealthMetrics) =>
-    new Date(m.date + 'T12:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })
+    new Date(m.date + 'T12:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })
   );
 
   const activeMarkers = markers.filter((m: BodyMarker) => !m.resolved);
@@ -123,7 +123,7 @@ export function BodyTab({ metrics, allMetrics, markers, onUpdateMetrics, onAddMa
     if (idx < 0 || idx >= weightHistory.length) return;
     const entry = weightHistory[idx];
     const value = entry.weight_kg as number;
-    const date = new Date(entry.date + 'T12:00:00').toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+    const date = new Date(entry.date + 'T12:00:00').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
     const prevValue = idx > 0 ? (weightHistory[idx - 1].weight_kg as number) : null;
     const weekAgoIdx = idx - 7;
     const weekAgoValue = weekAgoIdx >= 0 ? (weightHistory[weekAgoIdx].weight_kg as number) : null;
@@ -247,7 +247,7 @@ export function BodyTab({ metrics, allMetrics, markers, onUpdateMetrics, onAddMa
                   </button>
                 </div>
                 <span className="hv2-photo-date">
-                  {new Date(photo.date + 'T12:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  {new Date(photo.date + 'T12:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                 </span>
                 {i === 0 && comparisonPhotos.length === 2 && <span className="hv2-photo-label">Before</span>}
                 {i === 1 && <span className="hv2-photo-label">After</span>}

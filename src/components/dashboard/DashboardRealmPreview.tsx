@@ -18,11 +18,11 @@ import { LightingSystem } from '../../realm/renderer/LightingSystem';
 
 /** Mood to weather mapping */
 function getWeatherInfo(moodScore: number): { label: string; Icon: typeof Sun; color: string } {
-  if (moodScore >= 5) return { label: 'Clear Skies', Icon: Sun, color: '#FFD700' };
-  if (moodScore >= 4) return { label: 'Fair', Icon: Sun, color: '#FFA500' };
-  if (moodScore >= 3) return { label: 'Overcast', Icon: Cloud, color: '#8BA4BE' };
-  if (moodScore >= 2) return { label: 'Rain', Icon: CloudRain, color: '#5A7A9A' };
-  return { label: 'Storms', Icon: CloudRain, color: '#4A5A6A' };
+  if (moodScore >= 5) return { label: 'Cerah', Icon: Sun, color: '#FFD700' };
+  if (moodScore >= 4) return { label: 'Cukup Cerah', Icon: Sun, color: '#FFA500' };
+  if (moodScore >= 3) return { label: 'Berawan', Icon: Cloud, color: '#8BA4BE' };
+  if (moodScore >= 2) return { label: 'Hujan', Icon: CloudRain, color: '#5A7A9A' };
+  return { label: 'Badai', Icon: CloudRain, color: '#4A5A6A' };
 }
 
 /** Time of day to greeting */
@@ -30,7 +30,7 @@ function getTimeGreeting(tod: string): string {
   switch (tod) {
     case 'dawn': return 'Dawn breaks over';
     case 'morning': return 'Morning light in';
-    case 'day': return 'The sun shines on';
+    case 'day': return 'Matahari menyinari';
     case 'golden': return 'Golden hour in';
     case 'dusk': return 'Dusk settles over';
     case 'evening': return 'Evening falls on';
@@ -246,7 +246,7 @@ export const DashboardRealmPreview = memo(function DashboardRealmPreview() {
       <div className="realm-preview-header">
         <div className="realm-preview-title">
           <Castle size={16} style={{ color: '#FFD700' }} />
-          <span>The Realm</span>
+          <span>Dunia</span>
         </div>
         <div className="realm-preview-weather">
           <weather.Icon size={13} style={{ color: weather.color }} />
@@ -263,18 +263,18 @@ export const DashboardRealmPreview = memo(function DashboardRealmPreview() {
         />
         <div className="realm-preview-overlay">
           <span className="realm-preview-greeting">{greeting}</span>
-          <span className="realm-preview-town">Life Town</span>
+          <span className="realm-preview-town">Kota Kehidupan</span>
         </div>
       </div>
 
       <div className="realm-preview-stats">
         <div className="realm-preview-stat">
           <TreePine size={12} />
-          <span>{activeHabits} plants</span>
+          <span>{activeHabits} tanaman</span>
         </div>
         <div className="realm-preview-stat">
           <Sparkles size={12} />
-          <span>{activeGoals} quests</span>
+          <span>{activeGoals} misi</span>
         </div>
         <div className="realm-preview-stat">
           {isNight ? <Moon size={12} /> : <Sun size={12} />}
@@ -283,7 +283,7 @@ export const DashboardRealmPreview = memo(function DashboardRealmPreview() {
       </div>
 
       <div className="realm-preview-cta">
-        Enter Realm →
+        Masuk ke Dunia →
       </div>
     </section>
   );

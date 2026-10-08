@@ -460,7 +460,7 @@ export function Goals() {
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      days.push({ date: d.toISOString().split('T')[0], label: d.toLocaleDateString('en', { weekday: 'short' }) });
+      days.push({ date: d.toISOString().split('T')[0], label: d.toLocaleDateString('id-ID', { weekday: 'short' }) });
     }
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -888,7 +888,7 @@ export function Goals() {
                         {allObjTasks.length > 0 && <>{doneObjTasks}/{allObjTasks.length}T</>}
                       </span>
                       {vel > 0 && <span className="gt-child-count" title="Tasks per week">{vel.toFixed(1)}/wk</span>}
-                      {projDate && <span className="gt-child-count" title="Projected completion">{new Date(projDate + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span>}
+                      {projDate && <span className="gt-child-count" title="Projected completion">{new Date(projDate + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>}
                     </>
                   );
                 })()}
@@ -1021,7 +1021,7 @@ export function Goals() {
                       {t.title}
                     </span>
                     {t.priority && <span className="gt-task-priority" data-priority={t.priority}>{t.priority}</span>}
-                    {t.due_date && <span className="gt-task-due">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span>}
+                    {t.due_date && <span className="gt-task-due">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>}
                   </div>
                 ))}
                 {doneTasks.length > 0 && (
@@ -1540,7 +1540,7 @@ export function Goals() {
                   )}
                 </div>
                 {t.priority && <span className="gt-task-priority" data-priority={t.priority}>{t.priority}</span>}
-                {t.due_date && <span className="gt-task-due">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span>}
+                {t.due_date && <span className="gt-task-due">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>}
                 <button className="gt-task-delete" aria-label="Delete task" onClick={() => deleteTask(t.id, t.goal_id)}><Trash2 size={12} /></button>
               </div>
             );

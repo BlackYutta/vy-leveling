@@ -60,7 +60,7 @@ export function DashboardQuickActions() {
     if (activeEvent) {
       // Stop the active activity
       await stopActivity();
-      showToast('⏹ Activity stopped!', '✅', '#39FF14');
+      showToast('⏹ Aktivitas dihentikan!', '✅', '#39FF14');
     } else {
       openSheet('start');
     }
@@ -74,41 +74,41 @@ export function DashboardQuickActions() {
         <button
           className={`qa-btn ${isLive ? 'qa-btn-live' : ''}`}
           onClick={handleStartStopClick}
-          title={isLive ? `Stop ${activeEvent.title}` : 'Start a live activity'}
+          title={isLive ? `Hentikan ${activeEvent.title}` : 'Mulai aktivitas langsung'}
         >
           {isLive ? <Square size={18} /> : <Play size={18} />}
           {isLive ? (
             <span className="qa-live-label">
-              <span>Stop</span>
+              <span>Hentikan</span>
               <span className="qa-live-time">{formatElapsed(elapsedSeconds)}</span>
             </span>
           ) : (
-            <span>Start</span>
+            <span>Mulai</span>
           )}
         </button>
-        <button className="qa-btn" onClick={() => openSheet('habit')} title="Log your habits for today">
+        <button className="qa-btn" onClick={() => openSheet('habit')} title="Catat kebiasaan hari ini">
           <Flame size={18} />
-          <span>Habits</span>
+          <span>Kebiasaan</span>
         </button>
-        <button className="qa-btn" onClick={() => openSheet('task')} title="Add a new task">
+        <button className="qa-btn" onClick={() => openSheet('task')} title="Tambah tugas baru">
           <Plus size={18} />
-          <span>Task</span>
+          <span>Tugas</span>
         </button>
-        <button className="qa-btn qa-btn-accent" onClick={() => openSheet('income')} title="Log income">
+        <button className="qa-btn qa-btn-accent" onClick={() => openSheet('income')} title="Catat pemasukan">
           <DollarSign size={18} />
-          <span>Income</span>
+          <span>Pemasukan</span>
         </button>
-        <button className="qa-btn" onClick={() => openSheet('meal')} title="Log a meal">
+        <button className="qa-btn" onClick={() => openSheet('meal')} title="Catat makanan">
           <UtensilsCrossed size={18} />
-          <span>Meal</span>
+          <span>Makanan</span>
         </button>
-        <button className="qa-btn" onClick={() => openSheet('health')} title="Log health metrics">
+        <button className="qa-btn" onClick={() => openSheet('health')} title="Catat metrik kesehatan">
           <Activity size={18} />
-          <span>Health</span>
+          <span>Kesehatan</span>
         </button>
-        <button className="qa-btn" onClick={() => openSheet('journal')} title="Quick journal entry">
+        <button className="qa-btn" onClick={() => openSheet('journal')} title="Buat catatan jurnal singkat">
           <BookOpen size={18} />
-          <span>Journal</span>
+          <span>Jurnal</span>
         </button>
       </div>
 

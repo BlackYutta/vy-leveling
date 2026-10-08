@@ -49,13 +49,13 @@ export function DashboardGreeting({ selectedDate, bestHabitStreak, todayMood, on
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 2 }}>
             <p className="dash-date">{todayStr}{todayMood && <span className="dash-mood"> {todayMood}</span>}</p>
             {bestHabitStreak > 0 && (
-              <span role="status" aria-label={`${bestHabitStreak} day streak`} style={{
+              <span role="status" aria-label={`Kebiasaan beruntun selama ${bestHabitStreak} hari`} style={{
                 display: 'inline-flex', alignItems: 'center', gap: 4,
                 background: 'rgba(249,115,22,0.1)', border: '1px solid rgba(249,115,22,0.2)',
                 borderRadius: 20, padding: '2px 8px', fontSize: 11, fontWeight: 600,
                 color: '#F97316', transition: 'all 0.2s',
               }}>
-                <Flame size={12} style={{ marginRight: 2, verticalAlign: 'middle' }} />{bestHabitStreak}d streak
+                <Flame size={12} style={{ marginRight: 2, verticalAlign: 'middle' }} />{bestHabitStreak} hari beruntun
               </span>
             )}
           </div>
@@ -69,8 +69,8 @@ export function DashboardGreeting({ selectedDate, bestHabitStreak, todayMood, on
               tabIndex={0}
               onClick={() => navigate('/character')}
               onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') navigate('/character'); }}
-              aria-label="View character"
-              title="Character"
+              aria-label="Lihat karakter"
+              title="Karakter"
               style={{
                 cursor: 'pointer',
                 borderRadius: 8,
@@ -90,8 +90,8 @@ export function DashboardGreeting({ selectedDate, bestHabitStreak, todayMood, on
             <button
               className="dash-level-btn"
               onClick={() => setGamModalOpen(true)}
-              aria-label={`Level ${gam.level}, ${gam.title}, ${gam.xp} XP total`}
-              title={`Level ${gam.level} — ${gam.title} — ${gam.xp} XP total`}
+              aria-label={`Level ${gam.level}, ${gam.title}, total ${gam.xp} XP`}
+              title={`Level ${gam.level} — ${gam.title} — total ${gam.xp} XP`}
               style={{
                 background: 'linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(255,215,0,0.08) 100%)',
                 border: '1px solid rgba(212,175,55,0.3)',
@@ -123,13 +123,13 @@ export function DashboardGreeting({ selectedDate, bestHabitStreak, todayMood, on
               </div>
             </button>
           )}
-          <button className="dash-icon-btn dash-layout-btn" onClick={() => onEditLayout ? onEditLayout() : layout.setEditing(true)} aria-label="Customise dashboard layout" title="Customise Dashboard" style={{
+          <button className="dash-icon-btn dash-layout-btn" onClick={() => onEditLayout ? onEditLayout() : layout.setEditing(true)} aria-label="Atur tata letak dasbor" title="Atur Dasbor" style={{
             background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.15)',
             borderRadius: 8, padding: '6px 8px', cursor: 'pointer', color: '#00D4FF',
             fontSize: 12, fontWeight: 500, display: 'flex', alignItems: 'center', gap: 4,
             transition: 'all 0.2s',
           }}>
-            <Settings size={13} /><span className="dash-layout-label" style={{ fontSize: 11 }}>Layout</span>
+            <Settings size={13} /><span className="dash-layout-label" style={{ fontSize: 11 }}>Tata Letak</span>
           </button>
         </div>
       </div>

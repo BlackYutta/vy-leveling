@@ -104,7 +104,7 @@ export function DetailsTab({ event, weeklyStats, onUpdate }: {
         <Calendar size={13} className="ed-id-icon" />
         <div className="ed-id-time-info">
           <span className="ed-id-date">
-            {start.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' })}
+            {start.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' })}
           </span>
           <span className="ed-id-time">
             {formatTime(start)} → {formatTime(end)}

@@ -36,14 +36,14 @@ interface MoreGroup {
 const MAIN_TABS: Tab[] = getMobileMainTabs().map(f => ({
   to: f.route,
   icon: ICON_MAP[f.icon] || LayoutDashboard,
-  label: f.id === 'dashboard' ? 'Home' : f.name,
+  label: f.id === 'dashboard' ? 'Beranda' : f.name,
   color: f.color,
 }));
 
 const moreGroups = getMobileMoreGroups();
 const MORE_GROUPS: MoreGroup[] = [
   {
-    label: 'Life',
+    label: 'Kehidupan',
     items: moreGroups.life.map(f => ({
       to: f.route,
       icon: ICON_MAP[f.icon] || LayoutDashboard,
@@ -53,7 +53,7 @@ const MORE_GROUPS: MoreGroup[] = [
     })),
   },
   {
-    label: 'Growth',
+    label: 'Pengembangan',
     items: moreGroups.growth.map(f => ({
       to: f.route,
       icon: ICON_MAP[f.icon] || LayoutDashboard,
@@ -66,7 +66,7 @@ const MORE_GROUPS: MoreGroup[] = [
 // Flat list for isActive checks
 const ALL_MORE_ITEMS: TabWithBadge[] = [
   ...MORE_GROUPS.flatMap(g => g.items),
-  { to: '__logout__', icon: LogOut, label: 'Log Out', color: '#EF4444' },
+  { to: '__logout__', icon: LogOut, label: 'Keluar', color: '#EF4444' },
 ];
 
 export function MobileNav() {
@@ -154,7 +154,7 @@ export function MobileNav() {
       {showSpaceAge && <SpaceAge onClose={() => setShowSpaceAge(false)} />}
       <nav
         className={`mobile-nav ${secretReady ? 'mn-secret-glow' : ''}`}
-        aria-label="Main navigation"
+        aria-label="Navigasi utama"
         onTouchStart={handleNavTouchStart}
         onTouchMove={handleNavTouchMove}
         onTouchEnd={handleNavTouchEnd}
@@ -188,12 +188,12 @@ export function MobileNav() {
         <button
           className={`mn-tab ${isMoreActive || showMore ? 'active' : ''}`}
           onClick={() => setShowMore(!showMore)}
-          aria-label={showMore ? 'Close more menu' : 'Open more menu'}
+          aria-label={showMore ? 'Tutup menu lainnya' : 'Buka menu lainnya'}
           aria-expanded={showMore}
           style={{ '--tab-color': '#8BA4BE', position: 'relative' } as React.CSSProperties}
         >
           {showMore ? <X size={20} /> : <MoreHorizontal size={20} />}
-          <span className="mn-label">More</span>
+          <span className="mn-label">Lainnya</span>
           {isMoreActive && !showMore && <div className="mn-dot" />}
           {socialUnread > 0 && !showMore && (
             <span style={{
@@ -210,7 +210,7 @@ export function MobileNav() {
       {showMore && (
         <>
           <div className="mn-overlay" onClick={() => setShowMore(false)} aria-hidden="true" />
-          <div className="mn-sheet" role="dialog" aria-label="More navigation options">
+          <div className="mn-sheet" role="dialog" aria-label="Pilihan navigasi lainnya">
             <div className="mn-sheet-handle" />
             <div className="mn-sheet-groups" role="menu">
               {MORE_GROUPS.map(group => (
@@ -258,7 +258,7 @@ export function MobileNav() {
                     style={{ '--item-color': '#EF4444' } as React.CSSProperties}
                   >
                     <div className="mn-sheet-icon"><LogOut size={22} /></div>
-                    <span>Log Out</span>
+                    <span>Keluar</span>
                   </button>
                 </div>
               </div>

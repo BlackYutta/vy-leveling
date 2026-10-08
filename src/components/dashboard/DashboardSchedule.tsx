@@ -90,7 +90,7 @@ export function DashboardSchedule({
           {dayEvents.length > 4 && <span className="ds-more">+{dayEvents.length - 4} more</span>}
         </div>
       ) : (
-        <p className="ds-empty">No events scheduled</p>
+        <p className="ds-empty">Tidak ada acara terjadwal</p>
       )}
 
       {dayBills.length > 0 && (

@@ -93,8 +93,8 @@ function getWeekEnd(weekStart: Date): Date {
 }
 
 function formatWeekLabel(weekStart: Date, weekEnd: Date): string {
-  const start = weekStart.toLocaleDateString('en', { month: 'short', day: 'numeric' });
-  const end = weekEnd.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+  const start = weekStart.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' });
+  const end = weekEnd.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' });
   return `${start} - ${end}`;
 }
 

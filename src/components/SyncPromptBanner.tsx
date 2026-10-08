@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Cloud, X, LogIn, UserPlus } from 'lucide-react';
 import { useUserStore } from '../stores/useUserStore';
-import { supabase } from '../lib/data-access';
+import { getEnvironment } from '../lib/data-access';
 import { getErrorMessage } from '../utils/error';
 import './SyncPromptBanner.css';
 
@@ -22,7 +22,7 @@ export function SyncPromptBanner() {
   const [success, setSuccess] = useState('');
 
   // Only show in local mode
-  if (mode !== 'local' || dismissed) return null;
+  if (mode !== 'local' || getEnvironment() === 'local-api' || dismissed) return null;
 
   const handleGoogleAuth = async () => {
     setLoading(true);

@@ -94,7 +94,7 @@ export function DatePicker({ value, onChange }: { value: string; onChange: (d: s
     onChange(d.toISOString().split('T')[0]);
   };
   const isToday = value === new Date().toISOString().split('T')[0];
-  const label = isToday ? 'Today' : new Date(value + 'T12:00:00').toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' });
+  const label = isToday ? 'Today' : new Date(value + 'T12:00:00').toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short' });
 
   return (
     <div className="date-picker-inline">

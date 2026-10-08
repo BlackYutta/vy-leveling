@@ -50,8 +50,8 @@ function getWeekRange(date: Date): { start: Date; end: Date } {
 const dateStr = localDateStr;
 
 function formatDateRange(start: Date, end: Date) {
-  const startStr = start.toLocaleDateString('en-AU', { month: 'short', day: 'numeric' });
-  const endStr = end.toLocaleDateString('en-AU', { month: 'short', day: 'numeric', year: 'numeric' });
+  const startStr = start.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' });
+  const endStr = end.toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' });
   return `${startStr} - ${endStr}`;
 }
 

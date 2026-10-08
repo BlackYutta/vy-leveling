@@ -1,1 +1,1 @@
--- Rollback scripts matching each migration.
+-- Skrip pembatalan yang sesuai untuk setiap migrasi.

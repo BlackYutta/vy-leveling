@@ -160,7 +160,7 @@ export function Finances() {
     for (let i = 5; i >= 0; i--) {
       const d = new Date(); d.setMonth(d.getMonth() - i); d.setDate(1);
       const mKey = d.toISOString().slice(0, 7);
-      const label = d.toLocaleDateString('en', { month: 'short' });
+      const label = d.toLocaleDateString('id-ID', { month: 'short' });
       const incTotal = incData.filter(r => r.date.startsWith(mKey)).reduce((s: number, r) => s + r.amount, 0);
       const expTotal = expData.filter(r => r.date.startsWith(mKey)).reduce((s: number, r) => s + r.amount, 0);
       months.push({ month: label, income: incTotal, expenses: expTotal });
@@ -424,7 +424,7 @@ export function Finances() {
       for (let i = 5; i >= 0; i--) {
         const d = new Date(); d.setMonth(d.getMonth() - i); d.setDate(1);
         const mKey = d.toISOString().slice(0, 7);
-        const label = d.toLocaleDateString('en', { month: 'short' });
+        const label = d.toLocaleDateString('id-ID', { month: 'short' });
         const revClients = income.filter(inc => inc.date.startsWith(mKey) && inc.client_id && clientIds.has(inc.client_id)).reduce((s, inc) => s + inc.amount, 0);
         const revSource = income.filter(inc => inc.date.startsWith(mKey) && !inc.client_id && matchSourceToBusiness(inc.source || '', businesses) === biz.id).reduce((s, inc) => s + inc.amount, 0);
         const rev = revClients + revSource;
@@ -458,7 +458,7 @@ export function Finances() {
       const mKey = d.toISOString().slice(0, 7);
       const mInc = income.filter(inc => inc.date.startsWith(mKey)).reduce((s, inc) => s + inc.amount, 0);
       const mExp = expenses.filter(e => e.date.startsWith(mKey)).reduce((s, e) => s + e.amount, 0);
-      savingsRateLast3.push({ month: d.toLocaleDateString('en', { month: 'short' }), rate: mInc > 0 ? ((mInc - mExp) / mInc) * 100 : 0 });
+      savingsRateLast3.push({ month: d.toLocaleDateString('id-ID', { month: 'short' }), rate: mInc > 0 ? ((mInc - mExp) / mInc) * 100 : 0 });
     }
     return { momChange, categoryChanges: categoryChanges.slice(0, 3), biggestThisWeek, savingsRateLast3, incomeVsExpenses: monthIncome - monthExpenses };
   }, [expenses, transactions, categories, income, som, monthExpenses, monthIncome]);
@@ -477,7 +477,7 @@ export function Finances() {
     for (let i = 5; i >= 0; i--) {
       const d = new Date(); d.setMonth(d.getMonth() - i); d.setDate(1);
       const mKey = d.toISOString().slice(0, 7);
-      labels.push(d.toLocaleDateString('en', { month: 'short' }));
+      labels.push(d.toLocaleDateString('id-ID', { month: 'short' }));
       sources.forEach(src => {
         const total = income.filter(inc => inc.date.startsWith(mKey) && (inc.source || 'Other') === src).reduce((s, inc) => s + inc.amount, 0);
         data[src].push(total);

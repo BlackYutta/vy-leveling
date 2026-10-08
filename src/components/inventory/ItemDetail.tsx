@@ -95,7 +95,7 @@ export function ItemDetail({ item, onClose }: ItemDetailProps) {
           <Field label="Price" value={`$${item.purchase_price.toFixed(2)}`} />
         )}
         {item.purchase_date && (
-          <Field label="Purchased" value={new Date(item.purchase_date).toLocaleDateString('en-AU')} />
+          <Field label="Purchased" value={new Date(item.purchase_date).toLocaleDateString('id-ID')} />
         )}
         {item.subcategory && (
           <Field label="Subcategory" value={item.subcategory} />
@@ -133,10 +133,10 @@ export function ItemDetail({ item, onClose }: ItemDetailProps) {
             <Field label="Species" value={pet.species} />
             {pet.breed && <Field label="Breed" value={pet.breed} />}
             {pet.weight && <Field label="Weight" value={`${pet.weight} kg`} />}
-            {pet.birthday && <Field label="Birthday" value={new Date(pet.birthday).toLocaleDateString('en-AU')} />}
+            {pet.birthday && <Field label="Birthday" value={new Date(pet.birthday).toLocaleDateString('id-ID')} />}
             {pet.vet_name && <Field label="Vet" value={pet.vet_name} />}
             {pet.vet_phone && <Field label="Vet Phone" value={pet.vet_phone} />}
-            {pet.next_vet_date && <Field label="Next Vet Visit" value={new Date(pet.next_vet_date).toLocaleDateString('en-AU')} />}
+            {pet.next_vet_date && <Field label="Next Vet Visit" value={new Date(pet.next_vet_date).toLocaleDateString('id-ID')} />}
           </div>
         </div>
       )}

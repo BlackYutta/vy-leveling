@@ -43,7 +43,7 @@ export function JournalCalendarStrip({ selectedDate, setSelectedDate, entryDates
               style={hasEntry && dayMood ? {
                 borderColor: MOODS.find(m => m.value === dayMood)?.color + '40',
               } : undefined}>
-              <span className="jnl-cal-dow">{dt.toLocaleDateString('en-AU', { weekday: 'short' })}</span>
+              <span className="jnl-cal-dow">{dt.toLocaleDateString('id-ID', { weekday: 'short' })}</span>
               <span className="jnl-cal-num">{dt.getDate()}</span>
               {hasEntry && <span className="jnl-cal-dot" style={{
                 backgroundColor: dayMood ? MOODS.find(m => m.value === dayMood)?.color : '#A855F7',

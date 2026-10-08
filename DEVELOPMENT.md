@@ -1,48 +1,48 @@
-# DEVELOPMENT.md — LifeOS Development Rules
-> Version: 1.0 | Created: 2026-02-12
-> ⚠️ THIS FILE MUST PERSIST THROUGH COMPACTION — it governs all LifeOS development.
+# DEVELOPMENT.md — Aturan Pengembangan LifeOS
+> Versi: 1.0 | Dibuat: 2026-02-12
+> ⚠️ BERKAS INI HARUS TETAP ADA SETELAH COMPACTION — berkas ini mengatur seluruh pengembangan LifeOS.
 
-## The Golden Rules
+## Aturan Utama
 
-### 1. Never Break Production
-- **`master` branch = production.** What's deployed. What users see.
-- **`develop` branch = active work.** All new features go here first.
-- **Feature branches** (`feature/xyz`) branch from `develop`, merge back to `develop`.
-- **Only merge `develop` → `master` at major milestones**, after testing.
+### 1. Jangan Merusak Produksi
+- **Branch `master` = produksi.** Kode yang di-deploy dan digunakan pengguna.
+- **Branch `develop` = pekerjaan aktif.** Semua fitur baru masuk ke sini terlebih dahulu.
+- **Branch fitur** (`feature/xyz`) dibuat dari `develop` dan digabungkan kembali ke `develop`.
+- **Gabungkan `develop` → `master` hanya pada pencapaian besar**, setelah pengujian.
 
-### 2. Database Migrations Are Sacred
-- **NEVER** edit production tables directly in Supabase dashboard.
-- **ALL schema changes** go through numbered migration files.
-- **Migrations are ADDITIVE ONLY:**
-  - ✅ ADD columns (with defaults so existing rows don't break)
-  - ✅ ADD tables
-  - ✅ ADD indexes, RLS policies
-  - ❌ NEVER rename columns (breaks existing queries)
-  - ❌ NEVER drop columns or tables (data loss)
-  - ❌ NEVER change column types (breaks existing data)
-- **If you must change a column:** add new column → migrate data → deprecate old (3-step)
-- Migration files: `sql/migrations/NNN_description.sql` (NNN = sequential number)
-- Each migration has a matching rollback: `sql/rollbacks/NNN_description.sql`
+### 2. Migrasi Basis Data Sangat Penting
+- **JANGAN PERNAH** mengubah tabel produksi langsung melalui dasbor Supabase.
+- **SEMUA perubahan skema** harus melalui berkas migrasi bernomor.
+- **Migrasi hanya boleh menambahkan:**
+  - ✅ TAMBAHKAN kolom (dengan nilai bawaan agar baris lama tetap valid)
+  - ✅ TAMBAHKAN tabel
+  - ✅ TAMBAHKAN indeks dan kebijakan RLS
+  - ❌ JANGAN PERNAH mengganti nama kolom (kueri yang ada akan rusak)
+  - ❌ JANGAN PERNAH menghapus kolom atau tabel (data akan hilang)
+  - ❌ JANGAN PERNAH mengubah tipe kolom (data yang ada bisa rusak)
+- **Jika kolom harus diubah:** tambahkan kolom baru → migrasikan data → hentikan penggunaan kolom lama (3 langkah)
+- Berkas migrasi: `sql/migrations/NNN_description.sql` (NNN = nomor urut)
+- Setiap migrasi memiliki skrip pembatalan yang sesuai: `sql/rollbacks/NNN_description.sql`
 
-### 3. Feature Flags
-- New features ship behind flags in `src/lib/feature-flags.ts`
-- Default: OFF in production, ON in development
-- Flip on when feature is tested and ready
-- Existing users never see half-built features
+### 3. Feature Flag
+- Fitur baru harus dikendalikan oleh flag di `src/lib/feature-flags.ts`
+- Nilai bawaan: NONAKTIF di produksi, AKTIF di pengembangan
+- Aktifkan setelah fitur diuji dan siap
+- Pengguna lama tidak boleh melihat fitur yang belum selesai
 
-### 4. Zero Data Loss
-- Every deploy must preserve all existing user data
-- Test migrations against a copy of prod data before applying
-- Supabase RLS (Row Level Security) stays ON — users only see their own data
-- No `DELETE FROM` or `TRUNCATE` in migrations. Ever.
+### 4. Jangan Sampai Ada Data Hilang
+- Setiap deployment harus mempertahankan seluruh data pengguna yang ada
+- Uji migrasi menggunakan salinan data produksi sebelum menerapkannya
+- Supabase RLS (Row Level Security) harus tetap AKTIF — pengguna hanya boleh melihat datanya sendiri
+- Jangan pernah menggunakan `DELETE FROM` atau `TRUNCATE` dalam migrasi
 
-### 5. Deploy Process
+### 5. Proses Deployment
 ```bash
-# From lifeos-app/
-# 1. Build
+# Dari lifeos-app/
+# 1. Buat build
 npm run build
 
-# 2. Deploy to AWS (both paths!)
+# 2. Deploy ke AWS (ke kedua jalur!)
 scp -i ~/.ssh/your-key.pem -r dist/* YOUR_USER@YOUR_SERVER_IP:/tmp/lifeos-deploy/
 ssh -i ~/.ssh/your-key.pem YOUR_USER@YOUR_SERVER_IP '
   sudo cp -r /tmp/lifeos-deploy/* /your/deploy/path/
@@ -50,11 +50,11 @@ ssh -i ~/.ssh/your-key.pem YOUR_USER@YOUR_SERVER_IP '
   rm -rf /tmp/lifeos-deploy
 '
 
-# 3. Verify
+# 3. Verifikasi
 curl -s -o /dev/null -w "%{http_code}" https://app.runlifeos.com
 ```
 
-### 6. Git Workflow
+### 6. Alur Kerja Git
 ```
 master ──────────────────────── (production, tagged releases)
   │
@@ -65,57 +65,57 @@ master ──────────────────────── 
         └── fix/schedule-bug
 ```
 
-**Commit messages:** Use conventional format:
-- `feat:` new feature
-- `fix:` bug fix  
-- `schema:` database migration
-- `deploy:` deployment-related
-- `docs:` documentation
+**Pesan commit:** Gunakan format konvensional:
+- `feat:` fitur baru
+- `fix:` perbaikan bug
+- `schema:` migrasi basis data
+- `deploy:` perubahan terkait deployment
+- `docs:` dokumentasi
 
-**Tags:** `v0.4.0`, `v0.5.0` etc. at each major milestone on master.
+**Tag:** `v0.4.0`, `v0.5.0`, dan seterusnya pada setiap pencapaian besar di `master`.
 
-## Current State (as of 2026-02-12)
+## Kondisi Saat Ini (per 2026-02-12)
 
-### Repos
+### Repositori
 | Repo | Branch | Purpose |
 |------|--------|---------|
-| `lifeos-app` | master/develop | Web app (Vite + React + TS + Supabase) |
-| `lifeos` | master | Mobile app (Expo + React Native + Supabase) |
-| `lifeos-website` | master | Landing page (static HTML) |
+| `lifeos-app` | master/develop | Aplikasi web (Vite + React + TS + Supabase) |
+| `lifeos` | master | Aplikasi seluler (Expo + React Native + Supabase) |
+| `lifeos-website` | master | Halaman utama (HTML statis) |
 
-### Infrastructure
-- **Supabase:** project `YOUR_PROJECT_REF` (prod)
-- **AWS Lightsail:** YOUR_SERVER_IP (web hosting)
-- **Domains:** runlifeos.com, lifeos.com.au, app.runlifeos.com
-- **Users in prod:** 4 accounts
-- **Tables:** 11 active
+### Infrastruktur
+- **Supabase:** proyek `YOUR_PROJECT_REF` (produksi)
+- **AWS Lightsail:** YOUR_SERVER_IP (hosting web)
+- **Domain:** runlifeos.com, lifeos.com.au, app.runlifeos.com
+- **Pengguna produksi:** 4 akun
+- **Tabel:** 11 aktif
 
-### Dual Deploy Paths (CRITICAL)
-The web app is served from TWO paths on AWS:
+### Dua Jalur Deployment (PENTING)
+Aplikasi web disajikan dari DUA jalur di AWS:
 - `/your/deploy/path/`
 - `/your/deploy/path/`
-**MUST deploy to BOTH** or users hit stale code.
+**WAJIB deploy ke KEDUANYA**, jika tidak pengguna dapat menerima kode lama.
 
-## Migration Log
-| # | Date | Description | Applied |
+## Catatan Migrasi
+| # | Tanggal | Keterangan | Diterapkan |
 |---|------|-------------|---------|
-| 001 | 2026-02-10 | Initial schema (23 tables) | ✅ |
-| 002 | TBD | (next migration goes here) | |
+| 001 | 2026-02-10 | Skema awal (23 tabel) | ✅ |
+| 002 | TBD | (migrasi berikutnya ditambahkan di sini) | |
 
-## Pre-Deploy Checklist
-- [ ] All tests pass locally
-- [ ] Migration tested against staging/copy
-- [ ] `develop` branch is clean, no WIP commits
-- [ ] Build succeeds (`npm run build`)
-- [ ] Deploy to BOTH AWS paths
-- [ ] Verify app loads at app.runlifeos.com
-- [ ] Check existing user data still intact
-- [ ] Tag release on master (`git tag v0.X.0`)
-- [ ] Update this migration log
+## Daftar Periksa Sebelum Deployment
+- [ ] Semua pengujian lulus secara lokal
+- [ ] Migrasi diuji pada staging/salinan data
+- [ ] Branch `develop` bersih, tanpa commit pekerjaan sementara
+- [ ] Build berhasil (`npm run build`)
+- [ ] Deploy ke KEDUA jalur AWS
+- [ ] Pastikan aplikasi terbuka di app.runlifeos.com
+- [ ] Pastikan data pengguna yang ada tetap utuh
+- [ ] Buat tag rilis di master (`git tag v0.X.0`)
+- [ ] Perbarui catatan migrasi ini
 
-## Emergency Rollback
-If a deploy breaks something:
-1. `git checkout master` (last known good)
+## Pembatalan Darurat
+Jika deployment menimbulkan masalah:
+1. `git checkout master` (versi terakhir yang diketahui berfungsi)
 2. `npm run build && deploy`
-3. If DB migration broke: run matching rollback SQL
-4. Notify the team immediately
+3. Jika migrasi basis data bermasalah: jalankan skrip SQL pembatalan yang sesuai
+4. Segera beri tahu tim

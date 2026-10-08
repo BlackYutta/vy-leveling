@@ -195,7 +195,7 @@ export function VoiceFAB() {
         onPointerCancel={handlePressEnd}
         onPointerLeave={isListening ? handlePressEnd : undefined}
         title="Hold to speak"
-        aria-label="Voice input — hold to speak"
+        aria-label="Masukan suara — tahan untuk berbicara"
       >
         <Mic size={18} className="voice-fab__icon" />
 

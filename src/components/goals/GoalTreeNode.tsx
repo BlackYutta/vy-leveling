@@ -243,7 +243,7 @@ export function GoalTreeNode({
                       {allObjTasks.length > 0 && <>{doneObjTasks}/{allObjTasks.length}T</>}
                     </span>
                     {vel > 0 && <span className="gt-child-count" title="Tasks per week">{vel.toFixed(1)}/wk</span>}
-                    {projDate && <span className="gt-child-count" title="Projected completion">{new Date(projDate + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span>}
+                    {projDate && <span className="gt-child-count" title="Projected completion">{new Date(projDate + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>}
                   </>
                 );
               })()}
@@ -360,7 +360,7 @@ export function GoalTreeNode({
                   </button>
                   <span className="gt-task-title" onClick={e => { e.stopPropagation(); onSetDetailTaskId(t.id); }}>{t.title}</span>
                   {t.priority && <span className="gt-task-priority" data-priority={t.priority}>{t.priority}</span>}
-                  {t.due_date && <span className="gt-task-due">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span>}
+                  {t.due_date && <span className="gt-task-due">{new Date(t.due_date + 'T00:00:00').toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}</span>}
                 </div>
               ))}
               {doneTasks.length > 0 && (

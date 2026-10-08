@@ -17,7 +17,7 @@
  */
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL
-  ? `${import.meta.env.VITE_API_BASE_URL}/api`
+  ? `${import.meta.env.VITE_API_BASE_URL.replace(/\/+$/, '')}/api`
   : '/api';
 
 // ─── Types ───────────────────────────────────────────────────────────
@@ -50,6 +50,7 @@ interface AuthSession {
   refresh_token: string;
   expires_in: number;
   expires_at?: number;
+  token_type?: string;
   user: AuthUser;
 }
 
@@ -118,7 +119,7 @@ async function apiRequest<T = any>(
 // Mimics Supabase PostgREST builder: .select().eq().order().limit() etc.
 // The chain is lazy — it only fires when awaited (via .then()).
 
-type FilterOperator = 'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte' | 'like' | 'ilike' | 'is' | 'in' | 'contains';
+type FilterOperator = 'eq' | 'neq' | 'gt' | 'gte' | 'lt' | 'lte' | 'like' | 'ilike' | 'is' | 'in' | 'contains' | 'not';
 
 interface QueryFilter {
   column: string;
@@ -149,13 +150,15 @@ class QueryBuilder<T = any> implements PromiseLike<PostgrestResponse<T>> {
   // ── Query type setters ──
 
   select(columns: string = '*', options?: { count?: 'exact' | 'planned' | 'estimated' }): this {
-    this._method = 'GET';
+    const isMutation = this._body !== undefined &&
+      (this._method === 'POST' || this._method === 'PUT' || this._method === 'PATCH');
+    if (isMutation) {
+      this._returnSelect = true;
+    } else {
+      this._method = 'GET';
+    }
     this._columns = columns;
     if (options?.count) this._count = options.count;
-    // If called after insert/upsert, it means "return the inserted row"
-    if (this._body && (this._method === 'POST' || this._method === 'PUT')) {
-      this._returnSelect = true;
-    }
     return this;
   }
 
@@ -228,6 +231,11 @@ class QueryBuilder<T = any> implements PromiseLike<PostgrestResponse<T>> {
 
   is(column: string, value: any): this {
     this._filters.push({ column, operator: 'is', value });
+    return this;
+  }
+
+  not(column: string, operator: string, value: any): this {
+    this._filters.push({ column, operator: 'not', value: `${operator}.${value}` });
     return this;
   }
 
@@ -407,17 +415,36 @@ function _setStoredSession(session: AuthSession | null) {
 const localAuth = {
   async getUser(): Promise<{ data: { user: AuthUser | null }; error: any }> {
     const session = _getStoredSession();
-    if (!session) return { data: { user: null }, error: null };
-
     const res = await apiRequest<AuthUser>(`${API_BASE}/auth/user`);
     if (res.error) {
-      return { data: { user: session.user }, error: null }; // fallback to cached
+      return { data: { user: session?.user ?? null }, error: res.error };
     }
     return { data: { user: res.data }, error: null };
   },
 
   async getSession(): Promise<{ data: { session: AuthSession | null }; error: any }> {
-    const session = _getStoredSession();
+    const cachedSession = _getStoredSession();
+    if (cachedSession) return { data: { session: cachedSession }, error: null };
+
+    const res = await apiRequest<{
+      access_token: string;
+      expires_at: number;
+      user: AuthUser;
+    }>(`${API_BASE}/auth/session`);
+    if (res.error || !res.data) {
+      return { data: { session: null }, error: res.error };
+    }
+
+    const expiresAt = res.data.expires_at;
+    const session: AuthSession = {
+      access_token: res.data.access_token,
+      refresh_token: '',
+      expires_in: Math.max(0, expiresAt - Math.floor(Date.now() / 1000)),
+      expires_at: expiresAt,
+      token_type: 'bearer',
+      user: res.data.user,
+    };
+    _setStoredSession(session);
     return { data: { session }, error: null };
   },
 
@@ -458,8 +485,19 @@ const localAuth = {
     };
   },
 
+  async resend({ type, email }: { type: 'signup' | 'email_change'; email: string }): Promise<{ data: null; error: PostgrestError }> {
+    return {
+      data: null,
+      error: {
+        message: `Email confirmation (${type}) is unavailable in local mode for ${email}.`,
+        details: '',
+        hint: 'The local SQLite API uses a single local user and does not send email.',
+        code: 'LOCAL_EMAIL_UNAVAILABLE',
+      },
+    };
+  },
+
   async signOut(): Promise<{ error: any }> {
-    await apiRequest(`${API_BASE}/auth/logout`, { method: 'POST' }).catch(() => {});
     _setStoredSession(null);
     _notifyAuthChange('SIGNED_OUT', null);
     return { error: null };
@@ -520,6 +558,18 @@ export const supabase = {
       body: params ? JSON.stringify(params) : undefined,
     });
   },
+
+  // The HTTP/SQLite backend has no realtime transport.
+  channel(_name: string, _opts?: unknown) {
+    const noopChannel = {
+      on: () => noopChannel,
+      subscribe: () => noopChannel,
+      unsubscribe: () => {},
+    };
+    return noopChannel;
+  },
+
+  removeChannel(_channel: unknown) {},
 
   auth: localAuth,
 };

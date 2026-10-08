@@ -42,7 +42,7 @@ function isPerfectWeek(logs: HabitLog[], targetCount: number): boolean {
 function getLast7Days(): { date: string; label: string }[] {
   return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(); d.setDate(d.getDate() - (6 - i));
-    return { date: localDateStr(d), label: d.toLocaleDateString('en', { weekday: 'narrow' }) };
+    return { date: localDateStr(d), label: d.toLocaleDateString('id-ID', { weekday: 'narrow' }) };
   });
 }
 
@@ -53,7 +53,7 @@ function getLast30Days(): { date: string; label: string; dayOfWeek: number }[] {
     d.setDate(d.getDate() - i);
     days.push({
       date: localDateStr(d),
-      label: d.toLocaleDateString('en', { month: 'short', day: 'numeric' }),
+      label: d.toLocaleDateString('id-ID', { month: 'short', day: 'numeric' }),
       dayOfWeek: d.getDay(),
     });
   }

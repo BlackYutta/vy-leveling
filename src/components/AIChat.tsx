@@ -800,7 +800,7 @@ export function AIChat() {
       <button
         className={`ai-chat-fab${externalInputFocused ? ' ai-chat-fab--hidden' : ''}`}
         onClick={() => setOpen(true)}
-        title="AI Assistant (⌘J)"
+        title="Asisten AI (⌘J)"
       >
         <Sparkles size={22} />
       </button>

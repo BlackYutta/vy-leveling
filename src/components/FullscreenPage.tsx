@@ -104,7 +104,7 @@ export function FullscreenPage({
       {/* ── Header ── */}
       {!chromeHidden && (
         <div className="fsp-header">
-          <button className="fsp-hamburger" onClick={toggleSidebar} aria-label="Toggle menu">
+          <button className="fsp-hamburger" onClick={toggleSidebar} aria-label="Buka/tutup menu">
             <Menu size={20} />
           </button>
           <div className="fsp-title">
@@ -114,12 +114,12 @@ export function FullscreenPage({
           {headerExtra}
           <div className="fsp-header-right">
             {!gam.loading && (
-              <button className="fsp-level-badge" onClick={() => setGamOpen(true)} aria-label={`Level ${gam.level}, ${Math.round(gam.xpProgress * 100)}% to next level`}>
+              <button className="fsp-level-badge" onClick={() => setGamOpen(true)} aria-label={`Level ${gam.level}, ${Math.round(gam.xpProgress * 100)}% menuju level berikutnya`}>
                 <div className="fsp-level-circle">{gam.level}</div>
                 <span className="fsp-level-xp" role="status">{Math.round(gam.xpProgress * 100)}%</span>
               </button>
             )}
-            <button className="fsp-icon-btn" onClick={() => navigate('/social?tab=messages')} aria-label="Messages">
+            <button className="fsp-icon-btn" onClick={() => navigate('/social?tab=messages')} aria-label="Pesan">
               <MessageCircle size={16} />
             </button>
           </div>

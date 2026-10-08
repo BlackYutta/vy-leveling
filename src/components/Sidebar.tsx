@@ -91,21 +91,21 @@ export const Sidebar = React.memo(function Sidebar({ expanded = true, onToggle, 
    * ───────────────────────────────────────────────────────────────── */
 
   return (
-    <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`} aria-label="Main navigation">
+    <aside className={`sidebar ${collapsed ? 'collapsed' : ''}`} aria-label="Navigasi utama">
       {/* Logo + collapse */}
       <div className="sb-top">
-        <button className="sb-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0, display: 'flex', alignItems: 'center', gap: 8 }} aria-label="Go to dashboard">
+        <button className="sb-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0, display: 'flex', alignItems: 'center', gap: 8 }} aria-label="Buka dasbor">
           <Zap size={22} className="sb-logo-icon" />
           <span className="sb-brand">LifeOS</span>
         </button>
-        <button className="sb-collapse" onClick={onToggle} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
+        <button className="sb-collapse" onClick={onToggle} aria-label={collapsed ? 'Perluas bilah sisi' : 'Ciutkan bilah sisi'}>
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
       </div>
 
       {/* XP Bar — click to open full stats */}
       {!gam.loading && (
-        <div className="sb-xp-bar" style={{ padding: '0 12px 8px', cursor: 'pointer' }} onClick={() => setGamOpen(true)} title="View Player Stats">
+        <div className="sb-xp-bar" style={{ padding: '0 12px 8px', cursor: 'pointer' }} onClick={() => setGamOpen(true)} title="Lihat statistik pemain">
           <XPBar
             compact
             level={gam.level}
@@ -118,7 +118,7 @@ export const Sidebar = React.memo(function Sidebar({ expanded = true, onToggle, 
       )}
 
       {/* Nav */}
-      <nav className="sb-nav" aria-label="Primary navigation">
+      <nav className="sb-nav" aria-label="Navigasi utama">
         {NAV_ITEMS.map(item => {
           const Icon = item.icon;
           const active = location.pathname === item.to || (item.to !== '/' && location.pathname.startsWith(item.to));
@@ -153,7 +153,7 @@ export const Sidebar = React.memo(function Sidebar({ expanded = true, onToggle, 
               color: 'rgba(255,255,255,0.25)', textTransform: 'uppercase',
               letterSpacing: '0.1em', marginTop: 4,
             }}>
-              Systems
+              Sistem
             </div>
             {systemPages
               .filter((p, i, arr) => arr.findIndex(x => x.path === p.path) === i)
@@ -179,21 +179,21 @@ export const Sidebar = React.memo(function Sidebar({ expanded = true, onToggle, 
 
       {/* Footer */}
       <div className="sb-footer">
-        <NavLink to="/settings" className="sb-link sb-settings-link" title="Settings">
+        <NavLink to="/settings" className="sb-link sb-settings-link" title="Pengaturan">
           <div className="sb-icon-wrap" style={{ '--link-color': '#64748B' } as React.CSSProperties}>
             <Settings size={18} />
           </div>
-          <span className="sb-label">Settings</span>
+          <span className="sb-label">Pengaturan</span>
         </NavLink>
         <button
           className="sb-link sb-tutorials-btn"
           onClick={() => setTutorialListOpen(true)}
-          title={`Tutorials (${tutorialProgress.done}/${tutorialProgress.total})`}
+          title={`Panduan (${tutorialProgress.done}/${tutorialProgress.total})`}
         >
           <div className="sb-icon-wrap" style={{ '--link-color': '#D4AF37' } as React.CSSProperties}>
             <GraduationCap size={18} />
           </div>
-          <span className="sb-label">Tutorials</span>
+          <span className="sb-label">Panduan</span>
           {tutorialProgress.done < tutorialProgress.total && (
             <div className="sb-tutorials-ring">
               <ProgressRing
@@ -222,12 +222,12 @@ export const Sidebar = React.memo(function Sidebar({ expanded = true, onToggle, 
             <button
               className="sb-link sb-setup-btn"
               onClick={() => setSetupListOpen(true)}
-              title={`Life Setup (${setupPercent}%)`}
+              title={`Pengaturan Hidup (${setupPercent}%)`}
             >
               <div className="sb-icon-wrap" style={{ '--link-color': '#00D4FF' } as React.CSSProperties}>
                 <Sparkles size={18} />
               </div>
-              <span className="sb-label">Life Setup</span>
+              <span className="sb-label">Pengaturan Hidup</span>
               {setupPercent < 100 && (
                 <div className="sb-tutorials-ring">
                   <ProgressRing
@@ -253,10 +253,10 @@ export const Sidebar = React.memo(function Sidebar({ expanded = true, onToggle, 
         })()}
         <button
           className="sb-upgrade-btn"
-          title="Early Adopter — Pro Unlocked"
-          aria-label="Early Adopter Pro"
+          title="Pengguna Awal — Pro Aktif"
+          aria-label="Pro untuk Pengguna Awal"
           onClick={() => {
-            alert('🎉 Early Adopter — Pro Unlocked!\n\nThank you for being one of the first to use LifeOS. All Pro features are yours for free.\n\nWe\'re building something special, and you\'re part of it from the beginning.');
+            alert('🎉 Pro untuk Pengguna Awal Aktif!\n\nTerima kasih telah menjadi salah satu pengguna pertama LifeOS. Semua fitur Pro dapat Anda gunakan secara gratis.\n\nKami sedang membangun sesuatu yang istimewa, dan Anda menjadi bagian dari perjalanan ini sejak awal.');
           }}
           style={{
             display: 'flex', alignItems: 'center', gap: 8, padding: '10px 14px', margin: '0 8px 8px',
@@ -266,22 +266,22 @@ export const Sidebar = React.memo(function Sidebar({ expanded = true, onToggle, 
             width: 'calc(100% - 16px)',
           }}
         >
-          <Crown size={16} /> <span>Pro — Early Adopter</span>
+          <Crown size={16} /> <span>Pro — Pengguna Awal</span>
         </button>
         <button
           className="sb-link sb-feedback-btn"
           onClick={() => document.dispatchEvent(new CustomEvent('open-feedback'))}
-          aria-label="Send feedback"
-          title="Send feedback"
+          aria-label="Kirim masukan"
+          title="Kirim masukan"
         >
           <div className="sb-icon-wrap" style={{ '--link-color': '#8BA4BE' } as React.CSSProperties}>
             <MessageSquarePlus size={18} />
           </div>
-          <span className="sb-label">Feedback</span>
+          <span className="sb-label">Masukan</span>
         </button>
         <div className="sb-user">
           <span className="sb-email">{user?.email?.split('@')[0] || 'User'}</span>
-          <button className="sb-signout" onClick={signOut} aria-label="Sign out" title="Sign out">
+          <button className="sb-signout" onClick={signOut} aria-label="Keluar" title="Keluar">
             <LogOut size={16} />
           </button>
         </div>

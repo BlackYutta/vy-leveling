@@ -270,8 +270,8 @@ function AppRoutes() {
             <button
               onClick={async () => {
                 if (user.email) {
-                  await supabase.auth.resend({ type: 'signup', email: user.email });
-                  alert('Confirmation email resent!');
+                  const { error } = await supabase.auth.resend({ type: 'signup', email: user.email });
+                  alert(error ? error.message : 'Confirmation email resent!');
                 }
               }}
               aria-label="Resend confirmation email"
@@ -380,11 +380,15 @@ function AppRoutes() {
 
 function App() {
   const oauthReady = useOAuthCallbackHandler();
+  const pathname = window.location.pathname;
+  const basename = !isDesktop && (pathname === '/app' || pathname.startsWith('/app/'))
+    ? '/app'
+    : undefined;
 
   if (!oauthReady) return <GlobalLoadingSpinner />;
 
   return (
-    <Router {...(isDesktop ? {} : { basename: "/app" })}>
+    <Router {...(basename ? { basename } : {})}>
       {!isDesktop && <UpdateBanner />}
       <ConnectionBanner />
       <WhatsNew />

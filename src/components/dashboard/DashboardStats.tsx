@@ -51,14 +51,14 @@ export function DashboardStatsRow({
         <div className="stat-icon" style={{ background: 'rgba(57,255,20,0.1)' }}><CheckCircle2 size={18} color="#39FF14" /></div>
         <div>
           <span className="stat-val">{dayDoneTasks.length}<span className="stat-dim">/{dayTasks.length}</span></span>
-          <span className="stat-lbl">{dayActiveTasks.length > 0 ? `${dayActiveTasks.length} remaining` : dayTasks.length > 0 ? '✓ All done!' : 'No tasks'}</span>
+          <span className="stat-lbl">{dayActiveTasks.length > 0 ? `Sisa ${dayActiveTasks.length}` : dayTasks.length > 0 ? '✓ Semua selesai!' : 'Tidak ada tugas'}</span>
         </div>
       </div>
       <div className="stat-card clickable" onClick={onScrollToHabits}>
         <div className="stat-icon" style={{ background: 'rgba(249,115,22,0.1)' }}><Flame size={18} color="#F97316" /></div>
         <div>
           <span className="stat-val">{dayHabitsDone}<span className="stat-dim">/{totalHabits}</span></span>
-          <span className="stat-lbl">Habits done</span>
+          <span className="stat-lbl">Kebiasaan selesai</span>
         </div>
       </div>
       <div className="stat-card clickable" onClick={() => navigate('/finances')}>
@@ -66,15 +66,15 @@ export function DashboardStatsRow({
           {dayBills.length > 0 ? <Receipt size={18} color="#F43F5E" /> : net >= 0 ? <TrendingUp size={18} color="#39FF14" /> : <TrendingDown size={18} color="#F43F5E" />}
         </div>
         <div>
-          <span className="stat-val">{dayBills.length > 0 ? `${dayBills.length} bill${dayBills.length > 1 ? 's' : ''}` : `${net >= 0 ? '+' : '-'}${fmtCurrency(net)}`}</span>
-          <span className="stat-lbl">{dayBills.length > 0 ? `$${dayBills.reduce((s: number, b: Bill) => s + b.amount, 0).toFixed(0)} due` : 'Net this month'}</span>
+          <span className="stat-val">{dayBills.length > 0 ? `${dayBills.length} tagihan` : `${net >= 0 ? '+' : '-'}${fmtCurrency(net)}`}</span>
+          <span className="stat-lbl">{dayBills.length > 0 ? `Jatuh tempo: $${dayBills.reduce((s: number, b: Bill) => s + b.amount, 0).toFixed(0)}` : 'Neto bulan ini'}</span>
         </div>
       </div>
       <div className="stat-card clickable" onClick={() => navigate('/schedule')}>
         <div className="stat-icon" style={{ background: 'rgba(0,212,255,0.1)' }}><Clock size={18} color="#00D4FF" /></div>
         <div>
           <span className="stat-val">{dayEvents.length}</span>
-          <span className="stat-lbl">Events</span>
+          <span className="stat-lbl">Acara</span>
         </div>
       </div>
     </div>
@@ -97,20 +97,20 @@ export function DashboardInsights({
   return (
     <div className="insights-section">
       <div className="insights-header">
-        <h2><BarChart3 size={16} /> {isToday ? 'Insights' : `${todayStr} overview`}</h2>
+        <h2><BarChart3 size={16} /> {isToday ? 'Wawasan' : `Ringkasan ${todayStr}`}</h2>
       </div>
       <div className="insights-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
         <div className="insight-card glass clickable card-hover" onClick={() => { onScrollToTasks(); onSetTaskView('board'); }}>
-          <ProgressRing progress={dayTaskProgress} size={window.innerWidth < 600 ? 70 : 110} color="#39FF14" label="Day Tasks" sublabel={`${dayDoneTasks.length}/${dayTasks.length} done`} />
+          <ProgressRing progress={dayTaskProgress} size={window.innerWidth < 600 ? 70 : 110} color="#39FF14" label="Tugas Hari Ini" sublabel={`${dayDoneTasks.length}/${dayTasks.length} selesai`} />
         </div>
         <div className="insight-card glass clickable card-hover" onClick={onScrollToHabits}>
-          <ProgressRing progress={totalHabits > 0 ? dayHabitsDone / totalHabits : 0} size={window.innerWidth < 600 ? 70 : 110} color="#F97316" label="Habits" sublabel={`${bestHabitStreak}d streak`} />
+          <ProgressRing progress={totalHabits > 0 ? dayHabitsDone / totalHabits : 0} size={window.innerWidth < 600 ? 70 : 110} color="#F97316" label="Kebiasaan" sublabel={`${bestHabitStreak} hari beruntun`} />
         </div>
         <div className="insight-card glass clickable card-hover" onClick={() => navigate('/goals')}>
-          <ProgressRing progress={avgGoalProgress} size={window.innerWidth < 600 ? 70 : 110} color="#A855F7" label="Goals" sublabel={`${activeGoalCount} active`} />
+          <ProgressRing progress={avgGoalProgress} size={window.innerWidth < 600 ? 70 : 110} color="#A855F7" label="Tujuan" sublabel={`${activeGoalCount} aktif`} />
         </div>
         <div className="insight-card glass chart-card">
-          <MiniChart data={weeklyChartData.map(d => d.count)} labels={weeklyChartData.map(d => d.label)} color="#00D4FF" height={80} title="Tasks this week" />
+          <MiniChart data={weeklyChartData.map(d => d.count)} labels={weeklyChartData.map(d => d.label)} color="#00D4FF" height={80} title="Tugas minggu ini" />
         </div>
       </div>
     </div>

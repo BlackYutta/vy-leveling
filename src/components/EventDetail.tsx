@@ -48,7 +48,7 @@ function detectDetailType(event: ScheduleEvent): DetailType {
 
 function fmtDateTime(iso: string) {
   const d = new Date(iso);
-  const date = d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+  const date = d.toLocaleDateString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
   const time = d.toLocaleTimeString('en-AU', { hour: '2-digit', minute: '2-digit', hour12: true });
   return { date, time };
 }
@@ -86,9 +86,9 @@ export function EventDetail({ event, onClose, onUpdate }: EventDetailProps) {
       setTitle(event.title || '');
       setDescription((event.description as string) || '');
       setLocation(event.location || '');
-      setStartDate(s.toLocaleDateString('en-CA'));
+      setStartDate(s.toLocaleDateString('id-ID'));
       setStartTime(`${String(s.getHours()).padStart(2, '0')}:${String(s.getMinutes()).padStart(2, '0')}`);
-      setEndDate(e.toLocaleDateString('en-CA'));
+      setEndDate(e.toLocaleDateString('id-ID'));
       setEndTime(`${String(e.getHours()).padStart(2, '0')}:${String(e.getMinutes()).padStart(2, '0')}`);
     }
   }, [event]);

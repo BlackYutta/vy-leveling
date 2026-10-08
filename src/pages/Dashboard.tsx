@@ -73,11 +73,11 @@ import { FeatureErrorBoundary } from '../components/FeatureErrorBoundary';
 type DashTab = 'today' | 'schedule' | 'goals' | 'habits' | 'insights';
 
 const DASH_TABS = [
-  { id: 'today',    label: 'Today',    icon: LayoutDashboard, color: '#F97316' },
-  { id: 'schedule', label: 'Schedule', icon: Calendar,        color: '#00D4FF' },
-  { id: 'goals',    label: 'Goals',    icon: Target,          color: '#39FF14' },
-  { id: 'habits',   label: 'Habits',   icon: Flame,           color: '#EAB308' },
-  { id: 'insights', label: 'Insights', icon: BarChart3,       color: '#A855F7' },
+  { id: 'today',    label: 'Hari Ini',     icon: LayoutDashboard, color: '#F97316' },
+  { id: 'schedule', label: 'Jadwal',       icon: Calendar,        color: '#00D4FF' },
+  { id: 'goals',    label: 'Tujuan',       icon: Target,          color: '#39FF14' },
+  { id: 'habits',   label: 'Kebiasaan',    icon: Flame,           color: '#EAB308' },
+  { id: 'insights', label: 'Wawasan',      icon: BarChart3,       color: '#A855F7' },
 ];
 
 const VALID_TABS: DashTab[] = ['today', 'schedule', 'goals', 'habits', 'insights'];
@@ -247,7 +247,7 @@ export function Dashboard() {
     for (let i = 6; i >= 0; i--) {
       const d = new Date(); d.setDate(d.getDate() - i);
       const dateStr = localDateStr(d);
-      days.push({ label: d.toLocaleDateString('en', { weekday: 'short' }), count: weeklyTasks.filter(t => t.completed_at?.startsWith(dateStr)).length });
+      days.push({ label: d.toLocaleDateString('id-ID', { weekday: 'short' }), count: weeklyTasks.filter(t => t.completed_at?.startsWith(dateStr)).length });
     }
     return days;
   }, [weeklyTasks]);
@@ -259,14 +259,14 @@ export function Dashboard() {
 
   // ── Shared elements across tabs ──
   const weekStrip = (
-    <div className="week-strip" role="tablist" aria-label="Select day of the week">
+    <div className="week-strip" role="tablist" aria-label="Pilih hari dalam minggu">
       {weekDays.map(d => (
         <button key={`${d.day}-${d.date}`}
           className={`week-cell ${d.isToday ? 'today' : ''} ${d.isPast ? 'past' : ''} ${d.fullDate === selectedDate ? 'selected' : ''}`}
           onClick={() => setSelectedDate(d.fullDate)}
           role="tab"
           aria-selected={d.fullDate === selectedDate}
-          aria-label={`${d.day} ${d.date}${d.isToday ? ', today' : ''}`}>
+          aria-label={`${d.day} ${d.date}${d.isToday ? ', hari ini' : ''}`}>
           <span className="week-lbl">{d.day}</span>
           <span className="week-num">{d.date}</span>
           {d.fullDate === selectedDate && <div className="week-dot" aria-hidden="true" />}
@@ -304,13 +304,13 @@ export function Dashboard() {
         {activeTab === 'today' && (
           <div className="dash-today-layout">
             <div className="dash-full-row">
-              <FeatureErrorBoundary feature="Greeting" compact>
+              <FeatureErrorBoundary feature="Salam" compact>
                 <DashboardGreeting selectedDate={selectedDate} bestHabitStreak={bestHabitStreak} todayMood={todayMood} onEditLayout={() => layout.setEditing(true)} />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Quick Actions" compact>
+              <FeatureErrorBoundary feature="Aksi Cepat" compact>
                 <DashboardQuickActions />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Streak Warnings" compact>
+              <FeatureErrorBoundary feature="Peringatan Rangkaian" compact>
                 <DashboardStreakWarnings />
               </FeatureErrorBoundary>
 
@@ -322,11 +322,11 @@ export function Dashboard() {
                   borderRadius: 10, fontSize: 13, color: 'rgba(255,255,255,0.7)',
                 }}>
                   <Brain size={16} />
-                  <span>ZeroClaw has <strong style={{ color: '#00D4FF' }}>{activeInsightCount}</strong> insight{activeInsightCount !== 1 ? 's' : ''} for you</span>
+                  <span>ZeroClaw memiliki <strong style={{ color: '#00D4FF' }}>{activeInsightCount}</strong> wawasan untuk Anda</span>
                 </div>
               )}
 
-              <FeatureErrorBoundary feature="Free Time" compact>
+              <FeatureErrorBoundary feature="Waktu Luang" compact>
                 <FreeTimeSuggestions />
               </FeatureErrorBoundary>
               {weekStrip}
@@ -338,7 +338,7 @@ export function Dashboard() {
                   />
                   <button
                     onClick={(e) => { e.preventDefault(); e.stopPropagation(); setUIState('phase_tracker_dismissed'); setPhaseTrackerDismissed(true); }}
-                    aria-label="Dismiss setup tracker"
+                    aria-label="Sembunyikan pelacak penyiapan"
                     style={{
                       position: 'absolute', top: 8, right: 8, background: 'rgba(255,255,255,0.08)',
                       border: 'none', borderRadius: '50%', width: 22, height: 22,
@@ -346,7 +346,7 @@ export function Dashboard() {
                       cursor: 'pointer', color: 'rgba(255,255,255,0.4)', fontSize: 12,
                       lineHeight: 1, padding: 0, zIndex: 2,
                     }}
-                    title="Dismiss — find it in the sidebar"
+                    title="Sembunyikan — buka kembali dari bilah sisi"
                   >
                     ✕
                   </button>
@@ -354,35 +354,35 @@ export function Dashboard() {
               )}
             </div>
             <div className="dash-primary-col">
-              <FeatureErrorBoundary feature="Triage" compact>
+              <FeatureErrorBoundary feature="Prioritas" compact>
                 <DashboardTriage />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Overdue" compact>
+              <FeatureErrorBoundary feature="Terlambat" compact>
                 <DashboardOverdue />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Morning Brief" compact>
+              <FeatureErrorBoundary feature="Ringkasan Pagi" compact>
                 <DashboardMorningBrief />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Stats" compact>
+              <FeatureErrorBoundary feature="Statistik" compact>
                 <DashboardStatsRow dayTasks={dayTasks} dayDoneTasks={dayDoneTasks} dayActiveTasks={dayActiveTasks}
                   dayHabitsDone={dayHabitsDone} totalHabits={habits.length} dayEvents={dayEvents} dayBills={dayBills} net={net}
                   onScrollToTasks={() => scrollTo(tasksRef)} onScrollToHabits={() => scrollTo(habitsRef)} onSetTaskFilter={f => setTaskFilter(f as string)} />
               </FeatureErrorBoundary>
             </div>
             <div className="dash-secondary-col">
-              <FeatureErrorBoundary feature="Realm Invite" compact>
+              <FeatureErrorBoundary feature="Undangan Dunia" compact>
                 <DashboardRealmInvite />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Realm Preview" compact>
+              <FeatureErrorBoundary feature="Pratinjau Dunia" compact>
                 <DashboardRealmPreview />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="NPC Insight" compact>
+              <FeatureErrorBoundary feature="Wawasan NPC" compact>
                 <DashboardNPCInsight />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Celestial" compact>
+              <FeatureErrorBoundary feature="Astral" compact>
                 <DashboardCelestial />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Life Pulse" compact>
+              <FeatureErrorBoundary feature="Denyut Kehidupan" compact>
                 <DashboardLifePulse />
               </FeatureErrorBoundary>
             </div>
@@ -394,7 +394,7 @@ export function Dashboard() {
           <div className="dash-schedule-layout">
             <div className="dash-full-row">{weekStrip}</div>
             <div className="dash-primary-col">
-              <FeatureErrorBoundary feature="Schedule" compact>
+              <FeatureErrorBoundary feature="Jadwal" compact>
                 <DashboardSchedule selectedDate={selectedDate} events={events} habits={habits} habitLogs={habitLogs} bills={bills}
                   onToggleHabit={async (habitId: string) => {
                     await useHabitsStore.getState().toggleHabit(habitId, selectedDate);
@@ -402,7 +402,7 @@ export function Dashboard() {
               </FeatureErrorBoundary>
             </div>
             <div className="dash-secondary-col">
-              <FeatureErrorBoundary feature="Tasks" compact>
+              <FeatureErrorBoundary feature="Tugas" compact>
                 <DashboardTasks ref={tasksRef} tasks={tasks} goals={goals} selectedDate={selectedDate}
                   loading={loading} taskView={taskView} taskFilter={taskFilter} onSetTaskView={setTaskView}
                   onSetTaskFilter={setTaskFilter} onRefresh={fetchAll} onOpenDetail={setDetailTaskId} />
@@ -414,10 +414,10 @@ export function Dashboard() {
         {/* ═══ GOALS TAB ═══ */}
         {activeTab === 'goals' && (
           <div className="dash-goals-layout">
-            <FeatureErrorBoundary feature="Goals" compact>
+            <FeatureErrorBoundary feature="Tujuan" compact>
               <DashboardGoals goals={goals} />
             </FeatureErrorBoundary>
-            <FeatureErrorBoundary feature="Achievements" compact>
+            <FeatureErrorBoundary feature="Pencapaian" compact>
               <DashboardAchievements />
             </FeatureErrorBoundary>
           </div>
@@ -428,15 +428,15 @@ export function Dashboard() {
           <div className="dash-habits-layout">
             <div className="dash-full-row">{weekStrip}</div>
             <div className="dash-primary-col">
-              <FeatureErrorBoundary feature="Habits" compact>
+              <FeatureErrorBoundary feature="Kebiasaan" compact>
                 <DashboardHabits ref={habitsRef} habits={habits} habitLogs={habitLogs} selectedDate={selectedDate} onRefresh={fetchAll} />
               </FeatureErrorBoundary>
             </div>
             <div className="dash-secondary-col">
-              <FeatureErrorBoundary feature="Completion Rates" compact>
+              <FeatureErrorBoundary feature="Tingkat Penyelesaian" compact>
                 <DashboardCompletionRates />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Suggestions" compact>
+              <FeatureErrorBoundary feature="Saran" compact>
                 <DashboardSuggestions suggestions={habitSuggestions} onSuggestionsChange={setHabitSuggestions} onRefresh={fetchAll} />
               </FeatureErrorBoundary>
             </div>
@@ -447,7 +447,7 @@ export function Dashboard() {
         {activeTab === 'insights' && (
           <div className="dash-insights-layout">
             <div className="dash-full-row">
-              <FeatureErrorBoundary feature="Insights" compact>
+              <FeatureErrorBoundary feature="Wawasan" compact>
                 <DashboardInsights isToday={isToday} todayStr={todayStr} dayTaskProgress={dayTaskProgress}
                   dayDoneTasks={dayDoneTasks} dayTasks={dayTasks} dayHabitsDone={dayHabitsDone} totalHabits={habits.length}
                   bestHabitStreak={bestHabitStreak} avgGoalProgress={avgGoalProgress}
@@ -457,16 +457,16 @@ export function Dashboard() {
               </FeatureErrorBoundary>
             </div>
             <div className="dash-primary-col">
-              <FeatureErrorBoundary feature="Health" compact>
+              <FeatureErrorBoundary feature="Kesehatan" compact>
                 <DashboardHealth healthMetrics={healthMetrics} />
               </FeatureErrorBoundary>
             </div>
             <div className="dash-secondary-col">
-              <FeatureErrorBoundary feature="Finances" compact>
+              <FeatureErrorBoundary feature="Keuangan" compact>
                 <DashboardFinances ref={finRef} income={income} expenses={expenses} bills={bills}
                   businesses={businesses} transactions={transactions} goals={goals} finSnapshot={finSnapshot} />
               </FeatureErrorBoundary>
-              <FeatureErrorBoundary feature="Journal" compact>
+              <FeatureErrorBoundary feature="Jurnal" compact>
                 <DashboardJournal selectedDate={selectedDate} />
               </FeatureErrorBoundary>
             </div>

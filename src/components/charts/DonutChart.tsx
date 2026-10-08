@@ -144,7 +144,7 @@ export function DonutChart({
                 style={{ transition: 'font-size 0.2s, fill 0.2s' }}
               >
                 {activeIdx !== null ? segments[activeIdx]?.value !== undefined
-                  ? `$${Math.abs(segments[activeIdx].value).toLocaleString('en-AU', { maximumFractionDigits: 0 })}`
+                  ? `$${Math.abs(segments[activeIdx].value).toLocaleString('id-ID', { maximumFractionDigits: 0 })}`
                   : centerValue
                   : centerValue}
               </text>

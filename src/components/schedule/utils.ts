@@ -26,7 +26,7 @@ export const PRIORITIES = [
 
 /** Format date for display (e.g., "Monday, 3 March") */
 export function fmtDisplay(d: Date): string {
-  return d.toLocaleDateString('en-AU', { weekday: 'long', day: 'numeric', month: 'long' });
+  return d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' });
 }
 
 /** Format hour label (e.g., "9 AM" or "09:00") */

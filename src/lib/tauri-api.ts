@@ -633,6 +633,18 @@ const localAuth = {
     };
   },
 
+  async resend({ type, email }: { type: 'signup' | 'email_change'; email: string }) {
+    return {
+      data: null,
+      error: {
+        message: `Email confirmation (${type}) is unavailable in local mode for ${email}.`,
+        details: '',
+        hint: 'Local mode uses a single user and does not send email.',
+        code: 'LOCAL_EMAIL_UNAVAILABLE',
+      },
+    };
+  },
+
   async signOut(): Promise<{ error: any }> {
     if (!isTauriCheck()) {
       await httpQuery(`${API_BASE}/auth/logout`, { method: 'POST' }).catch(() => {});

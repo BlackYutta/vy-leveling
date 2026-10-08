@@ -158,7 +158,7 @@ Only do this when the user clearly wants something created, logged, updated, or 
 
 ## CURRENT CONTEXT
 - User's name: ${ctx.userName || 'there'} (use their name naturally in conversation)
-- Today: ${ctx.today} (${new Date(ctx.today + 'T00:00:00').toLocaleDateString('en-AU', { weekday: 'long' })})
+- Today: ${ctx.today} (${new Date(ctx.today + 'T00:00:00').toLocaleDateString('id-ID', { weekday: 'long' })})
 - Current time: ${ctx.currentTime} (${ctx.timezone})
 - Timezone: ${ctx.timezone}
 - UTC offset: ${ctx.utcOffset}
@@ -832,13 +832,13 @@ export async function loadIntentContext(userId: string): Promise<IntentContext> 
   // Use Australia/Melbourne timezone for all date/time calculations
   const melbTZ = 'Australia/Melbourne';
   const nowMelb = new Date();
-  const today = nowMelb.toLocaleDateString('en-CA', { timeZone: melbTZ }); // YYYY-MM-DD in Melbourne
+  const today = nowMelb.toLocaleDateString('id-ID', { timeZone: melbTZ }); // YYYY-MM-DD in Melbourne
   const tomorrowDate = new Date(nowMelb.getTime() + 86400000);
-  const tomorrow = tomorrowDate.toLocaleDateString('en-CA', { timeZone: melbTZ });
+  const tomorrow = tomorrowDate.toLocaleDateString('id-ID', { timeZone: melbTZ });
   const currentTime = nowMelb.toLocaleTimeString('en-GB', { timeZone: melbTZ, hour: '2-digit', minute: '2-digit', hour12: false }); // HH:MM
   // Calculate UTC offset for Melbourne (handles DST automatically)
   const utcOffset = (() => {
-    const fmt = new Intl.DateTimeFormat('en-US', { timeZone: melbTZ, timeZoneName: 'shortOffset' });
+    const fmt = new Intl.DateTimeFormat('id-ID', { timeZone: melbTZ, timeZoneName: 'shortOffset' });
     const parts = fmt.formatToParts(nowMelb);
     const tzPart = parts.find(p => p.type === 'timeZoneName')?.value || '+11:00';
     // Format like "GMT+11" → "+11:00"
@@ -846,7 +846,7 @@ export async function loadIntentContext(userId: string): Promise<IntentContext> 
     return m ? `${m[1]}${m[2].padStart(2, '0')}:00` : '+11:00';
   })();
   const weekAhead = new Date(Date.now() + 7 * 86400000).toISOString();
-  const sevenDaysAgo = new Date(Date.now() - 7 * 86400000).toLocaleDateString('en-CA');
+  const sevenDaysAgo = new Date(Date.now() - 7 * 86400000).toLocaleDateString('id-ID');
 
   // ── Hydrate stores (they deduplicate/cache internally) ──
   await Promise.all([
@@ -1895,7 +1895,7 @@ export async function executeActions(actions: IntentAction[]): Promise<{
         // ─── HEALTH actions ───────────────────────────
         case 'health_log': {
           const healthUserId = data.user_id as string;
-          const healthDate = (data.date as string) || new Date().toLocaleDateString('en-CA');
+          const healthDate = (data.date as string) || new Date().toLocaleDateString('id-ID');
           const { data: existing } = await supabase.from('health_metrics')
             .select('id').eq('user_id', healthUserId).eq('date', healthDate).limit(1);
           const metrics: Record<string, unknown> = {};

@@ -124,7 +124,7 @@ export function GroceryListTab({ items, weekStart, activeMeals, onGenerate, onTo
     }
   };
 
-  const weekLabel = new Date(weekStart + 'T12:00:00').toLocaleDateString('en-AU', {
+  const weekLabel = new Date(weekStart + 'T12:00:00').toLocaleDateString('id-ID', {
     day: 'numeric',
     month: 'short',
   });

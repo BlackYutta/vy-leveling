@@ -23,7 +23,7 @@ export interface FeatureModule {
 const FEATURES: FeatureModule[] = [
   {
     id: 'dashboard',
-    name: 'Today',
+    name: 'Hari Ini',
     route: '/',
     icon: 'LayoutDashboard',
     color: '#00D4FF',
@@ -37,7 +37,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'schedule',
-    name: 'Schedule',
+    name: 'Jadwal',
     route: '/schedule',
     icon: 'Calendar',
     color: '#A855F7',
@@ -51,7 +51,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'goals',
-    name: 'Goals',
+    name: 'Tujuan',
     route: '/goals',
     icon: 'Target',
     color: '#39FF14',
@@ -65,7 +65,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'habits',
-    name: 'Habits',
+    name: 'Kebiasaan',
     route: '/habits',
     icon: 'Flame',
     color: '#F97316',
@@ -79,7 +79,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'finances',
-    name: 'Finances',
+    name: 'Keuangan',
     route: '/finances',
     icon: 'Wallet',
     color: '#FACC15',
@@ -93,7 +93,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'health',
-    name: 'Health',
+    name: 'Kesehatan',
     route: '/health',
     icon: 'Heart',
     color: '#F43F5E',
@@ -107,7 +107,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'social',
-    name: 'Social',
+    name: 'Sosial',
     route: '/social',
     icon: 'Users',
     color: '#06B6D4',
@@ -121,7 +121,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'character',
-    name: 'Character',
+    name: 'Karakter',
     route: '/character',
     icon: 'Swords',
     color: '#D4AF37',
@@ -135,7 +135,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'reflect',
-    name: 'Reflect',
+    name: 'Refleksi',
     route: '/reflect',
     icon: 'BookOpen',
     color: '#EC4899',
@@ -149,7 +149,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'academy',
-    name: 'Academy',
+    name: 'Akademi',
     route: '/academy',
     icon: 'GraduationCap',
     color: '#D4AF37',
@@ -163,7 +163,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'lessons',
-    name: "Teddy's Lessons",
+    name: 'Pelajaran Teddy',
     route: '/lessons',
     icon: 'Music',
     color: '#FFD700',
@@ -177,7 +177,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'replicator',
-    name: 'Replicator',
+    name: 'Replikator',
     route: '/replicator',
     icon: 'Package',
     color: '#10B981',
@@ -191,7 +191,7 @@ const FEATURES: FeatureModule[] = [
   },
   {
     id: 'settings',
-    name: 'Settings',
+    name: 'Pengaturan',
     route: '/settings',
     icon: 'Settings',
     color: '#64748B',
